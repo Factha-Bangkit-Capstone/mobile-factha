@@ -1,5 +1,14 @@
 <resources>
     <string name="app_name">Factha</string>
-    <!-- TODO: Remove or change this placeholder text -->
+    <string name="app_title">Contribute For the Truth!</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_menu_1">Apa Sih Factha Itu?</string>
+    <string name="desc_menu_1">Factha merupakan aplikasi kanal berita yang menyediakan fitur filterisasi hoaks dan analisis berita</string>
+    <string name="title_menu_2">Cek Validasi Berita Yang Kamu Baca</string>
+    <string name="desc_menu_2">Cari tahu tahu validasi berita yang kamu baca hanya dengan memasukkan artikel tersebut ke aplikasi kami!</string>
+    <string name="title_menu_3">AI Analisis Berita</string>
+    <string name="desc_menu_3">Berita yang kamu masukkan akan diperiksa oleh AI kami untuk kemudian kami berikan hasil analisisnya dalam bentuk \"FAKTA\" dan \"HOAKS\" lengkap beserta dengan analisis keyakinan AI kami</string>
+    <string name="title_menu_4">List Berita Teranalisis</string>
+    <string name="desc_menu_4">Factha akan menampilkan berita yang telah kamu dan seluruh pengguna Factha telah masukkan, mari bergabung dengan kami dalam berkontribusi untuk menjaga integrasi informasi!</string>
+    <string name="buat_akun">Buat Akun</string>
 </resources>
