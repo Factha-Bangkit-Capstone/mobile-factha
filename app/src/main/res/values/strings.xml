@@ -19,4 +19,20 @@
     <string name="setting_subheading3">Lihat informasi aplikasi</string>
     <string name="setting_heading4">Keluar akun</string>
     <string name="setting_subheading4">Keluar dari akun</string>
+    <string name="image_factha_description">image_factha</string>
+    <string name="login">Login</string>
+    <string name="username">username</string>
+    <string name="username_tv">Username</string>
+    <string name="password_tv">Password</string>
+    <string name="password">password</string>
+    <string name="log_in_button">Sign In</string>
+    <string name="don_t_have_account">Don\'t have account?</string>
+    <string name="create_now">Create now</string>
+    <string name="password_must_be_at_least_8_characters_long">Password must be at least 8 characters long!</string>
+    <string name="register_tv">Register</string>
+    <string name="name_tv">Name</string>
+    <string name="name">name</string>
+    <string name="register_button">Sign Up</string>
+    <string name="already_have_account">Already have account?</string>
+    <string name="log_in">Log in</string>
 </resources>
