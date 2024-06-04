@@ -11,4 +11,12 @@
     <string name="title_menu_4">List Berita Teranalisis</string>
     <string name="desc_menu_4">Factha akan menampilkan berita yang telah kamu dan seluruh pengguna Factha telah masukkan, mari bergabung dengan kami dalam berkontribusi untuk menjaga integrasi informasi!</string>
     <string name="buat_akun">Buat Akun</string>
+    <string name="setting_heading1">Bahasa</string>
+    <string name="setting_subheading1">Indonesia, Inggris</string>
+    <string name="setting_heading2">Pemberitahuan</string>
+    <string name="setting_subheading2">Atur pemberitahuan</string>
+    <string name="setting_heading3">Tentang aplikasi</string>
+    <string name="setting_subheading3">Lihat informasi aplikasi</string>
+    <string name="setting_heading4">Keluar akun</string>
+    <string name="setting_subheading4">Keluar dari akun</string>
 </resources>
