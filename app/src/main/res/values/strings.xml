@@ -35,4 +35,8 @@
     <string name="register_button">Sign Up</string>
     <string name="already_have_account">Already have account?</string>
     <string name="log_in">Log in</string>
+    <string name="home">home</string>
+    <string name="article">article</string>
+    <string name="saved">saved</string>
+    <string name="setting">setting</string>
 </resources>
