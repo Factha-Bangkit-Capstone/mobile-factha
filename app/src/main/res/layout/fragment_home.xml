@@ -170,11 +170,10 @@
                     android:id="@+id/rv_selected_for_you"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:listitem="@layout/card_selected_for_you"
-                    android:paddingBottom="150dp"/>
+                    tools:listitem="@layout/card_selected_for_you"/>
 
                 <ProgressBar
-                    android:id="@+id/loding_menu"
+                    android:id="@+id/loading_menu_selected_for_you"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_gravity="center_horizontal"

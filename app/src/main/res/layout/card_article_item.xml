@@ -14,7 +14,7 @@
         android:padding="8dp">
 
         <ImageView
-            android:id="@+id/iv_select_for_you"
+            android:id="@+id/iv_article"
             android:layout_width="140dp"
             android:layout_height="100dp"
             android:layout_marginEnd="16dp"
@@ -25,7 +25,7 @@
             android:src="@drawable/image" />
 
         <TextView
-            android:id="@+id/tv_title_select_for_you"
+            android:id="@+id/tv_title_article"
             android:layout_width="210dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/ovo"
@@ -35,15 +35,15 @@
             android:textStyle="bold"
             android:maxLines="2"
             android:ellipsize="end"
-            app:layout_constraintStart_toEndOf="@+id/iv_select_for_you"
-            app:layout_constraintTop_toTopOf="@+id/iv_select_for_you"
+            app:layout_constraintStart_toEndOf="@+id/iv_article"
+            app:layout_constraintTop_toTopOf="@+id/iv_article"
             tools:ignore="HardcodedText"
             tools:text="Card Title"
             android:layout_marginStart="16dp"
             />
 
         <TextView
-            android:id="@+id/tv_description_select_for_you"
+            android:id="@+id/tv_description_article"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/ovo"
@@ -51,8 +51,8 @@
             android:textColor="@color/md_theme_outline"
             android:textSize="12sp"
             android:layout_marginTop="8dp"
-            app:layout_constraintStart_toStartOf="@+id/tv_title_select_for_you"
-            app:layout_constraintTop_toBottomOf="@+id/tv_title_select_for_you"/>
+            app:layout_constraintStart_toStartOf="@+id/tv_title_article"
+            app:layout_constraintTop_toBottomOf="@+id/tv_title_article"/>
 
         <ImageView
             android:layout_width="wrap_content"
@@ -71,8 +71,8 @@
             android:text="95"
             android:textColor="?attr/colorOnPrimary"
             android:layout_marginTop="24dp"
-            app:layout_constraintStart_toStartOf="@+id/tv_description_select_for_you"
-            app:layout_constraintTop_toBottomOf="@+id/tv_description_select_for_you"
+            app:layout_constraintStart_toStartOf="@+id/tv_description_article"
+            app:layout_constraintTop_toBottomOf="@+id/tv_description_article"
             tools:ignore="HardcodedText" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
