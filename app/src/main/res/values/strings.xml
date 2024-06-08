@@ -47,4 +47,5 @@
     <string name="selected_for_you">Selected For You</string>
     <string name="kendaraan">#Kendaraan</string>
     <string name="find_article">Find Article</string>
+    <string name="find_saved_article">Find Saved Article</string>
 </resources>
