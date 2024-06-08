@@ -1,0 +1,6 @@
+<!-- res/drawable/rounded_scroll_view.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <corners android:topLeftRadius="24dp"
+        android:topRightRadius="24dp"/>
+    <solid android:color="@color/md_theme_background" />
+</shape>

@@ -39,4 +39,11 @@
     <string name="article">article</string>
     <string name="saved">saved</string>
     <string name="setting">setting</string>
+    <string name="factha">factha.</string>
+    <string name="write">Write</string>
+    <string name="check_your_article">Check Your Article</string>
+    <string name="our_model_will_check_the_factual_accuracy_of_your_article">Our model will check the factual accuracy of your article.</string>
+    <string name="add">Add</string>
+    <string name="selected_for_you">Selected For You</string>
+    <string name="kendaraan">#Kendaraan</string>
 </resources>
