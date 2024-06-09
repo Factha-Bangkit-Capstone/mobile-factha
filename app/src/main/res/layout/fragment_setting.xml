@@ -32,18 +32,18 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:src="@tools:sample/avatars" />
+                    android:src="@drawable/avatar" />
 
                 <TextView
                     android:id="@+id/tv_username"
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
                     android:layout_marginStart="6dp"
+                    android:text="@string/tv_profile_name_example"
                     android:fontFamily="@font/montserrat_bold"
                     android:textColor="@color/md_theme_onPrimary"
                     app:layout_constraintBottom_toTopOf="@id/tv_email"
-                    app:layout_constraintStart_toEndOf="@+id/img_profile"
-                    tools:text="Fulan Fulani" />
+                    app:layout_constraintStart_toEndOf="@+id/img_profile" />
 
                 <TextView
                     android:id="@+id/tv_email"
@@ -51,11 +51,11 @@
                     android:layout_height="20dp"
                     android:layout_marginStart="6dp"
                     android:layout_marginBottom="35dp"
+                    android:text="@string/tv_email_user_example"
                     android:fontFamily="@font/montserrat_regular"
                     android:textColor="@color/md_theme_onPrimary"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/img_profile"
-                    tools:text="fulan.fln@gmail.com" />
+                    app:layout_constraintStart_toEndOf="@id/img_profile" />
 
                 <ImageButton
                     android:id="@+id/btn_edit_profile"

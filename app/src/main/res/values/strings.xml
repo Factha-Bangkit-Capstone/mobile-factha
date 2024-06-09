@@ -54,4 +54,6 @@
     <string name="thumbnail_article">Thumbnail Article</string>
     <string name="preview">Preview</string>
     <string name="submit">Submit</string>
+    <string name="tv_profile_name_example">Fulan Fulaniah</string>
+    <string name="tv_email_user_example">fulan.flnah@gmail.com</string>
 </resources>
