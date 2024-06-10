@@ -21,8 +21,8 @@
     <string name="setting_subheading4">Keluar dari akun</string>
     <string name="image_factha_description">image_factha</string>
     <string name="login">Login</string>
-    <string name="username">username</string>
-    <string name="username_tv">Username</string>
+    <string name="email">email</string>
+    <string name="email_tv">Email</string>
     <string name="password_tv">Password</string>
     <string name="password">password</string>
     <string name="log_in_button">Sign In</string>
@@ -56,6 +56,9 @@
     <string name="submit">Submit</string>
     <string name="tv_profile_name_example">Fulan Fulaniah</string>
     <string name="tv_email_user_example">fulan.flnah@gmail.com</string>
+    <string name="invalid_email">Invalid email</string>
+    <string name="email_can_t_empty">Email can\'t Empty</string>
+    <string name="password_can_t_empty">Password Can\'t Empty</string>
     <string-array name="language_options">
         <item name="indonesia">Indonesia</item>
         <item name="english">English</item>
