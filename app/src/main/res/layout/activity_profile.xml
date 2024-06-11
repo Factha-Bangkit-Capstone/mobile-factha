@@ -5,6 +5,6 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.activity.settings.EditProfileActivity">
+    tools:context=".view.activity.settings.ProfileActivity">
 
 </androidx.constraintlayout.widget.ConstraintLayout>
