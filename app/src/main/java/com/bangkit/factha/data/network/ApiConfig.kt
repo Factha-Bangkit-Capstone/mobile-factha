@@ -7,7 +7,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object ApiConfig {
 
-    private const val BASE_URL = "https://story-api.dicoding.dev/v1/"
+    private const val BASE_URL = "https://backend-factha-xedt5mrybq-et.a.run.app/"
     fun getAuthService(s: String): ApiServiceAuth {
         val loggingInterceptor = HttpLoggingInterceptor()
             .setLevel(HttpLoggingInterceptor.Level.BODY)

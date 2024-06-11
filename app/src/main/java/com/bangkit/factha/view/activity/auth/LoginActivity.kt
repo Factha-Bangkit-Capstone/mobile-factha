@@ -2,7 +2,6 @@ package com.bangkit.factha.view.activity.auth
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.opengl.Visibility
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
@@ -12,17 +11,23 @@ import android.text.method.PasswordTransformationMethod
 import android.util.Patterns
 import android.view.MotionEvent
 import android.view.View
-import android.widget.EditText
-import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.Observer
 import com.bangkit.factha.R
 import com.bangkit.factha.databinding.ActivityLoginBinding
+import com.bangkit.factha.data.helper.Result
+import com.bangkit.factha.view.ViewModelFactory
+import com.bangkit.factha.view.activity.MainActivity
 
 class LoginActivity : AppCompatActivity() {
     private var isPasswordVisible = false
     private lateinit var binding: ActivityLoginBinding
+
+    private val viewModel by viewModels<LoginViewModel> {
+        ViewModelFactory.getInstance(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +41,12 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
         setupPasswordToggle()
         setupRegisterNavigation()
+        observeViewModel()
+        setupAction()
+    }
+
+    private fun login(email: String, password: String) {
+        viewModel.login(email, password)
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -112,6 +123,15 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    private fun setupAction() {
+        binding.btnLogin.setOnClickListener {
+            val email = binding.emailEtLogin.text.toString()
+            val password = binding.passwordEtLogin.text.toString()
+
+            login(email, password)
+        }
+    }
+
     private fun setupRegisterNavigation() {
         binding.registerTv.setOnClickListener {
             val intent = Intent(this, RegisterActivity::class.java)
@@ -127,6 +147,47 @@ class LoginActivity : AppCompatActivity() {
         val isPasswordValid = !TextUtils.isEmpty(password) && password.length >= MIN_PASSWORD_LENGTH
 
         binding.btnLogin.isEnabled = isEmailValid && isPasswordValid
+    }
+
+    private fun observeViewModel() {
+        viewModel.loginResult.observe(this, Observer { result ->
+            when (result) {
+                is Result.Loading -> {
+                    binding.progressBar.visibility = View.VISIBLE
+                }
+                is Result.Success -> {
+                    binding.progressBar.visibility = View.GONE
+                    AlertDialog.Builder(this).apply {
+                        setTitle("Success!")
+                        setMessage("Login successful!")
+                        setPositiveButton("Login") { _, _ ->
+                            val intent = Intent(context, MainActivity::class.java)
+                            intent.flags =
+                                Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                            startActivity(intent)
+                            finish()
+                        }
+                        create()
+                        show()
+                    }
+                }
+                is Result.Error -> {
+                    binding.progressBar.visibility = View.GONE
+                    AlertDialog.Builder(this).apply {
+                        setTitle("Fail!")
+                        setMessage("Your email or password is wrong")
+                        setPositiveButton("OK", null)
+                        create()
+                        show()
+                    }
+                }
+            }
+        })
+    }
+
+
+    override fun onDestroy() {
+        super.onDestroy()
     }
 
     companion object {
