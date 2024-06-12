@@ -29,7 +29,7 @@ class AboutActivity : AppCompatActivity() {
         binding.ivLinkedin4.setOnClickListener { goToUrl("https://www.linkedin.com/in/aisya-oxzanna-pitaloka/") }
         binding.ivLinkedin5.setOnClickListener { goToUrl("https://www.linkedin.com/in/sabila-nadia-islamia-027095220/") }
         binding.ivLinkedin6.setOnClickListener { goToUrl("https://www.linkedin.com/in/maretaaliana/") }
-        binding.ivLinkedin7.setOnClickListener { goToUrl("") }
+        binding.ivLinkedin7.setOnClickListener { goToUrl("https://www.linkedin.com/in/marchel-yusuf-rumlawang-arpipi/") }
 
         binding.ivGithub1.setOnClickListener { goToUrl("https://github.com/dzkmrn/") }
         binding.ivGithub2.setOnClickListener { goToUrl("https://github.com/zenosance/") }
@@ -37,7 +37,7 @@ class AboutActivity : AppCompatActivity() {
         binding.ivGithub4.setOnClickListener { goToUrl("https://github.com/aisyaoxzanna/") }
         binding.ivGithub5.setOnClickListener { goToUrl("https://github.com/SabilaNadia02/") }
         binding.ivGithub6.setOnClickListener { goToUrl("https://github.com/Maretaaliana") }
-        binding.ivGithub7.setOnClickListener { goToUrl("") }
+        binding.ivGithub7.setOnClickListener { goToUrl("https://github.com/ysfrum/") }
 
     }
 
