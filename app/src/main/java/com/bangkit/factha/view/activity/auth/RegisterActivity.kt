@@ -11,13 +11,23 @@ import android.text.method.PasswordTransformationMethod
 import android.util.Patterns
 import android.view.MotionEvent
 import android.view.View
+import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import com.bangkit.factha.R
+import com.bangkit.factha.data.helper.Result
 import com.bangkit.factha.databinding.ActivityRegisterBinding
+import com.bangkit.factha.view.ViewModelFactory
+import com.bangkit.factha.view.activity.MainActivity
 
 class RegisterActivity : AppCompatActivity() {
     private var isPasswordVisible = false
     private lateinit var binding: ActivityRegisterBinding
+
+    private val viewModel by viewModels<RegisterViewModel> {
+        ViewModelFactory.getInstance(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +41,12 @@ class RegisterActivity : AppCompatActivity() {
         setContentView(binding.root)
         setupPasswordToggle()
         setupLoginNavigation()
+        observeViewModel()
+        setupAction()
+    }
+
+    private fun register(name: String, email: String, password: String) {
+        viewModel.register(name ,email, password)
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -136,6 +152,15 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
+    private fun setupAction() {
+        binding.btnRegister.setOnClickListener {
+            val name = binding.nameEtRegister.text.toString()
+            val email = binding.emailEtRegister.text.toString()
+            val password = binding.passwordEtRegister.text.toString()
+
+            register(name, email, password)
+        }
+    }
 
     private fun validateFields(){
         val email = binding.emailEtRegister.text.toString().trim()
@@ -147,6 +172,39 @@ class RegisterActivity : AppCompatActivity() {
         val isNameValid = !TextUtils.isEmpty(name)
 
         binding.btnRegister.isEnabled = isEmailValid && isPasswordValid && isNameValid
+    }
+
+    private fun observeViewModel() {
+        viewModel.registerResult.observe(this, Observer { result ->
+            when (result) {
+                is Result.Loading -> {
+                    binding.progressBar.visibility = View.VISIBLE
+                }
+                is Result.Success -> {
+                    binding.progressBar.visibility = View.GONE
+                    AlertDialog.Builder(this).apply {
+                        setTitle("Success!")
+                        setMessage("Success Create Account!")
+                        setPositiveButton("Login") { _, _ ->
+                            val intent = Intent(context, LoginActivity::class.java)
+                            startActivity(intent)
+                        }
+                        create()
+                        show()
+                    }
+                }
+                is Result.Error -> {
+                    binding.progressBar.visibility = View.GONE
+                    AlertDialog.Builder(this).apply {
+                        setTitle("Fail!")
+                        setMessage("Can't Create Account!")
+                        setPositiveButton("OK", null)
+                        create()
+                        show()
+                    }
+                }
+            }
+        })
     }
 
     companion object {
