@@ -59,6 +59,16 @@
     <string name="invalid_email">Invalid email</string>
     <string name="email_can_t_empty">Email can\'t Empty</string>
     <string name="password_can_t_empty">Password Can\'t Empty</string>
+    <string name="about_factha_title">&quot;Factha: Solusi Terdepan Untuk Menjaga Integritas Informasi dan Memfilter Hoaks&quot;</string>
+    <string name="meet_the_team">Temui Tim Factha!</string>
+    <string name="member1_name">Muhammad Dzaka</string>
+    <string name="member2_name">Mohammad Izamul</string>
+    <string name="member3_name">Fachrizal Ardiansyah</string>
+    <string name="member5_name">Sabila Nadia</string>
+    <string name="member4_name">Aisya Oxzana</string>
+    <string name="member6_name">Mareta Aliana</string>
+    <string name="member7_name">Marchel Yusuf</string>
+    <string name="factha_copyrights">Factha (2024) | Allrights reserved</string>
     <string-array name="language_options">
         <item name="indonesia">Indonesia</item>
         <item name="english">English</item>
