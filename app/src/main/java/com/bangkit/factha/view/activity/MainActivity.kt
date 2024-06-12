@@ -2,6 +2,7 @@ package com.bangkit.factha.view.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -14,6 +15,8 @@ import com.bangkit.factha.view.fragment.main.ArticleFragment
 import com.bangkit.factha.view.fragment.main.HomeFragment
 import com.bangkit.factha.view.fragment.main.SaveFragment
 import com.bangkit.factha.view.fragment.main.SettingFragment
+import com.bangkit.factha.data.helper.Result
+import com.bangkit.factha.data.response.ProfileResponse
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 @Suppress("DEPRECATION")
@@ -38,7 +41,6 @@ class MainActivity : AppCompatActivity() {
                 binding = ActivityMainBinding.inflate(layoutInflater)
                 val view = binding.root
                 setContentView(view)
-
                 replaceFragment(HomeFragment())
 
                 binding.btnNav.setOnNavigationItemSelectedListener { item ->
@@ -62,6 +64,7 @@ class MainActivity : AppCompatActivity() {
                         else -> false
                     }
                 }
+                viewModel.getProfile()
             }
         }
 
