@@ -18,10 +18,14 @@ class AuthRepository(
             if (response.isSuccessful) {
                 val loginResponse = response.body()
                 if (loginResponse?.data != null) {
-                    loginResponse.data.token?.let { token ->
-                        userPreferences.saveToken(token)
+                    loginResponse.data.let { data ->
+                        data.token?.let { data.userId?.let { it1 ->
+                            userPreferences.saveUser(it,
+                                it1
+                            )
+                        } }
                         Result.Success(loginResponse)
-                    } ?: Result.Error("Token not found")
+                    }
                 } else {
                     Result.Error("Empty Response Body")
                 }
