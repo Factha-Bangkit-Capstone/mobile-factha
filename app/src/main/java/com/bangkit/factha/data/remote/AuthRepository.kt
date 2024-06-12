@@ -52,9 +52,6 @@ class AuthRepository(
         }
     }
 
-    fun getToken(): Flow<String?> {
-        return userPreferences.token
-    }
 
     companion object {
         @Volatile

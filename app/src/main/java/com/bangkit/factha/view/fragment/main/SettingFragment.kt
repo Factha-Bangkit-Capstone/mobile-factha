@@ -6,14 +6,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.core.content.ContextCompat.startActivity
+import androidx.fragment.app.viewModels
 import androidx.fragment.app.Fragment
 import com.bangkit.factha.databinding.FragmentSettingBinding
+import com.bangkit.factha.view.ViewModelFactory
 import com.bangkit.factha.view.activity.splashscreen.SplashScreenActivity
 class SettingFragment : Fragment() {
     private var _binding: FragmentSettingBinding? = null
     private val binding get() = _binding!!
+
+    private val viewModel by viewModels<SettingViewModel> {
+        ViewModelFactory.getInstance(requireContext())
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -60,7 +64,7 @@ class SettingFragment : Fragment() {
             setTitle("Logout")
             setMessage("Are you sure you want to logout?")
             setPositiveButton("Yes") { _, _ ->
-                //viewModel.logout()
+                viewModel.logout()
                 val intent = Intent(requireContext(), SplashScreenActivity::class.java)
                 startActivity(intent)
             }

@@ -22,8 +22,4 @@ class LoginViewModel(private val repository: AuthRepository) : ViewModel() {
             _loginResult.value = result
         }
     }
-
-    fun getToken(): LiveData<String?> {
-        return repository.getToken().asLiveData()
-    }
 }
