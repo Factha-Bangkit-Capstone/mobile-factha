@@ -20,6 +20,9 @@ class AboutActivity : AppCompatActivity() {
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
 
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+
         binding.ivLinkedin1.setOnClickListener { goToUrl("https://www.linkedin.com/in/mhmddzaka/") }
         binding.ivLinkedin2.setOnClickListener { goToUrl("https://www.linkedin.com/in/mohammad-izamul-fikri-fahmi/") }
         binding.ivLinkedin3.setOnClickListener { goToUrl("https://www.linkedin.com/in/fachrizala/") }
