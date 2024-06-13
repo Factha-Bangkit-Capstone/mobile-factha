@@ -15,6 +15,7 @@ import com.bangkit.factha.view.activity.settings.AboutActivity
 import com.bangkit.factha.view.activity.splashscreen.SplashScreenActivity
 import com.bumptech.glide.Glide
 import android.util.Base64
+import com.bangkit.factha.view.activity.settings.ProfileActivity
 import kotlin.io.encoding.ExperimentalEncodingApi
 
 class SettingFragment : Fragment() {
@@ -42,6 +43,7 @@ class SettingFragment : Fragment() {
 //        binding.cardNotification.setOnClickListener {  }
         binding.cardAbout.setOnClickListener { selectAbout() }
         binding.cardLogout.setOnClickListener { logout() }
+        binding.btnEditProfile.setOnClickListener{ selectProfile() }
 
         viewModel.getSettingProfile().observe(viewLifecycleOwner) { settingProfile ->
             binding.tvUsername.text = settingProfile?.name ?: ""
@@ -81,6 +83,11 @@ class SettingFragment : Fragment() {
         startActivity(intent)
     }
 
+    private fun selectProfile() {
+        val intent = Intent(requireContext(), ProfileActivity::class.java)
+        startActivity(intent)
+    }
+
     private fun logout() {
         AlertDialog.Builder(requireContext()).apply {
             setTitle("Logout")
@@ -96,6 +103,5 @@ class SettingFragment : Fragment() {
             create()
             show()
         }
-
     }
 }

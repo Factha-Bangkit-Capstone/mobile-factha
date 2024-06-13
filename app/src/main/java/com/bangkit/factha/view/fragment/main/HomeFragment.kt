@@ -29,6 +29,7 @@ class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
+    private lateinit var homeAdapter: HomeAdapter
 
     private val viewModel by viewModels<MainViewModel> {
         ViewModelFactory.getInstance(requireContext())
@@ -37,7 +38,7 @@ class HomeFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -47,11 +48,8 @@ class HomeFragment : Fragment() {
 
         val userPreferences = UserPreferences.getInstance(requireContext().dataStore)
         val token = runBlocking { userPreferences.token.first() }
-
-        Log.d("tokentoken", "$token")
-
         if (token != null) {
-            observeNews(token)
+            observeNews()
         }
 
         setupRecyclerView()
@@ -59,9 +57,26 @@ class HomeFragment : Fragment() {
 
     private fun setupRecyclerView() {
         binding.rvSelectedForYou.layoutManager = LinearLayoutManager(requireContext())
+        homeAdapter = HomeAdapter(emptyList())
+        binding.rvSelectedForYou.adapter = homeAdapter
     }
 
-    private fun observeNews(token: String) {
-        viewModel.getNews(token)
+    private fun observeNews() {
+        viewModel.news.observe(viewLifecycleOwner, Observer { result ->
+            when (result) {
+                is Result.Loading -> {
+                    // Handle loading state if needed
+                }
+                is Result.Success -> {
+                    val newsData = result.data.newsData ?: emptyList()
+                    homeAdapter = HomeAdapter(newsData)
+                    binding.rvSelectedForYou.adapter = homeAdapter
+                }
+                is Result.Error -> {
+                    // Handle error state if needed
+                }
+            }
+        })
+        viewModel.getNews()
     }
 }

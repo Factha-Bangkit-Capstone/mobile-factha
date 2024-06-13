@@ -17,7 +17,7 @@ interface ApiServiceMain {
 
     @GET("news")
     suspend fun getAllNews(
-        @Header("Authorization") token: String,
+        @Header("X-Auth-Token") token: String,
     ): Response<NewsResponse>
 
     @GET("news/{newsId}")
