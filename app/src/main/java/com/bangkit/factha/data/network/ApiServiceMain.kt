@@ -22,7 +22,7 @@ interface ApiServiceMain {
 
     @GET("news/{newsId}")
     suspend fun getNewsDetail(
-        @Header("Authorization") token: String,
+        @Header("X-Auth-Token") token: String,
         @Path("newsId") newsId: String
     ): Response<NewsResponse>
 }

@@ -1,5 +1,6 @@
 package com.bangkit.factha.view.activity
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.bangkit.factha.data.remote.MainRepository
 import com.bangkit.factha.data.helper.Result
 import com.bangkit.factha.data.preference.UserDetails
+import com.bangkit.factha.data.response.NewsResponse
 import com.bangkit.factha.data.response.ProfileResponse
 import kotlinx.coroutines.launch
 
@@ -15,6 +17,10 @@ class MainViewModel(private val repository: MainRepository) : ViewModel() {
 
     private val _profileData = MutableLiveData<Result<ProfileResponse>>()
     val profileData: LiveData<Result<ProfileResponse>> = _profileData
+
+    private val _news = MutableLiveData<Result<NewsResponse>>()
+    val news: LiveData<Result<NewsResponse>> get() = _news
+
 
     fun getProfile() {
         viewModelScope.launch {
@@ -24,6 +30,13 @@ class MainViewModel(private val repository: MainRepository) : ViewModel() {
 
     fun getUserDetails(): LiveData<UserDetails?> {
         return repository.getUserDetails().asLiveData()
+    }
+
+    fun getNews(token: String) {
+        viewModelScope.launch {
+            val result = repository.getNews(token)
+            _news.postValue(result)
+        }
     }
 
     fun getToken(): LiveData<String?> {
