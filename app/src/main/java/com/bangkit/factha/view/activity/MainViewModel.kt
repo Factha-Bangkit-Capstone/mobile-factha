@@ -32,9 +32,9 @@ class MainViewModel(private val repository: MainRepository) : ViewModel() {
         return repository.getUserDetails().asLiveData()
     }
 
-    fun getNews(token: String) {
+    fun getNews() {
         viewModelScope.launch {
-            val result = repository.getNews(token)
+            val result = repository.getNews()
             _news.postValue(result)
         }
     }

@@ -70,6 +70,7 @@
     <string name="member7_name">Marchel Yusuf</string>
     <string name="factha_copyrights">Factha (2024) | Allrights reserved</string>
     <string name="tentang_aplikasi">Tentang Aplikasi</string>
+    <string name="edit_profile">Edit Profile</string>
     <string-array name="language_options">
         <item name="indonesia">Indonesia</item>
         <item name="english">English</item>

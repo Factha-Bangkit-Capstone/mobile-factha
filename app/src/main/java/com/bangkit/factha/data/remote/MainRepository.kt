@@ -71,20 +71,11 @@ class MainRepository(
         userPreferences.clearUserDetails()
     }
 
-    suspend fun getNews(token: String): Result<NewsResponse> {
+    suspend fun getNews(): Result<NewsResponse> {
         return try {
             val token = userPreferences.token.first() ?: ""
 
-            if (token.isNullOrEmpty()) {
-                return Result.Error("User token is null or empty")
-            }
-
-            val response = withContext(Dispatchers.IO) {
-                Log.d("tokenMainRepo", "$token")
-                apiServiceMain.getAllNews("Bearer $token")
-            }
-
-            Log.d("responsesee", response.toString())
+            val response = apiServiceMain.getAllNews("Bearer $token")
 
             if (response.isSuccessful) {
                 val body = response.body()

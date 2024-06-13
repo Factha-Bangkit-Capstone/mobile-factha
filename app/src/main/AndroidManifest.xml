@@ -32,6 +32,9 @@
             android:name=".view.activity.article.DetailArticleActivity"
             android:exported="false" />
         <activity
+            android:name=".view.activity.settings.ProfileActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.activity.article.AddArticleActivity"
             android:exported="false" />
         <activity
