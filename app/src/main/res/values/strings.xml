@@ -78,8 +78,18 @@
     <string name="status_account">Status Account</string>
     <string name="non_premium">Non premium</string>
     <string name="new_password">new password</string>
+    <string name="title">Title</string>
+    <string name="dialog_long_text_example_text">Teks berita</string>
+    <string name="n_percent">N%</string>
     <string-array name="language_options">
         <item name="indonesia">Indonesia</item>
         <item name="english">English</item>
+    </string-array>
+    <string-array name="pilihan_tag">
+        <item name="politik">Politik</item>
+        <item name="ekonomi">Ekonomi</item>
+        <item name="sosialbudaya">Sosial Budaya</item>
+        <item name="lalulintas">Lalu Lintas</item>
+        <item name="hiburan">Hiburan</item>
     </string-array>
 </resources>

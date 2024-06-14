@@ -1,6 +1,9 @@
 package com.bangkit.factha.view.fragment.main
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +18,8 @@ import com.bangkit.factha.view.activity.MainViewModel
 import com.bangkit.factha.data.helper.Result
 import com.bangkit.factha.data.preference.UserPreferences
 import com.bangkit.factha.data.preference.dataStore
+import com.bangkit.factha.view.activity.article.AddArticleActivity
+import com.bangkit.factha.view.activity.settings.AboutActivity
 import com.bangkit.factha.view.adapter.HomeAdapter
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
@@ -47,6 +52,9 @@ class HomeFragment : Fragment() {
         }
 
         setupRecyclerView()
+        binding.btnAddArticle.setOnClickListener { addNews() }
+        binding.btnWrite.setOnClickListener { addNews() }
+        binding.btnWriteIcon.setOnClickListener { addNews() }
     }
 
     private fun setupRecyclerView() {
@@ -56,21 +64,28 @@ class HomeFragment : Fragment() {
     }
 
     private fun observeNews() {
-        viewModel.news.observe(viewLifecycleOwner, Observer { result ->
+        viewModel.news.observe(viewLifecycleOwner) { result ->
             when (result) {
                 is Result.Loading -> {
-                    // Handle loading state if needed
+                    binding.loadingMenuSelectedForYou.visibility = View.VISIBLE
                 }
                 is Result.Success -> {
+                    binding.loadingMenuSelectedForYou.visibility = View.GONE
                     val newsData = result.data.newsData ?: emptyList()
                     homeAdapter = HomeAdapter(newsData)
                     binding.rvSelectedForYou.adapter = homeAdapter
                 }
                 is Result.Error -> {
-                    // Handle error state if needed
+                    Log.e("Result News Error", "Error: ${result.error}")
                 }
+                else -> { Log.e("Observe News Error", "Observe News Error") }
             }
-        })
+        }
         viewModel.getNews()
+    }
+
+    private fun addNews(){
+        val intent = Intent(requireContext(), AddArticleActivity::class.java)
+        startActivity(intent)
     }
 }

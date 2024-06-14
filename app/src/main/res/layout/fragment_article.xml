@@ -60,7 +60,7 @@
         android:layout_marginTop="8dp">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_selected_for_you"
+            android:id="@+id/rv_article"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:listitem="@layout/card_article_item"/>
