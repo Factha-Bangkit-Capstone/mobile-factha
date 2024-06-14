@@ -1,8 +1,10 @@
 package com.bangkit.factha.data.network
 
+import com.bangkit.factha.data.response.AddNewsRequest
 import com.bangkit.factha.data.response.NewsResponse
 import com.bangkit.factha.data.response.ProfileResponse
 import retrofit2.Response
+import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Multipart
@@ -26,5 +28,11 @@ interface ApiServiceMain {
     suspend fun getNewsDetail(
         @Header("X-Auth-Token") token: String,
         @Path("newsId") newsId: String
+    ): Response<NewsResponse>
+
+    @POST("news")
+    suspend fun addNews(
+        @Header("X-Auth-Token") token: String,
+        @Body requestBody: AddNewsRequest
     ): Response<NewsResponse>
 }

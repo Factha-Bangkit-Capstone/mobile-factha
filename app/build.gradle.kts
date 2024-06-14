@@ -69,5 +69,6 @@ dependencies {
     implementation("androidx.core:core-splashscreen:1.0.1")
     implementation("de.hdodenhof:circleimageview:3.1.0")
     implementation("com.github.Ferfalk:SimpleSearchView:0.2.1")
+    implementation("com.github.yalantis:ucrop:2.2.8")
 
 }
