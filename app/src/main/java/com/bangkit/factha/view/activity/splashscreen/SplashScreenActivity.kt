@@ -21,6 +21,7 @@ class SplashScreenActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
+        Thread.sleep(1_500)
         installSplashScreen()
 
         super.onCreate(savedInstanceState)
