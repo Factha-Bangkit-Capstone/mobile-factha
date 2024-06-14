@@ -43,6 +43,10 @@
             android:exported="false">
         </activity>
         <activity
+            android:name="com.yalantis.ucrop.UCropActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
             android:name=".view.activity.splashscreen.SplashScreenActivity"
             android:exported="true"
             android:theme="@style/Base.Theme.SplashScreen." />

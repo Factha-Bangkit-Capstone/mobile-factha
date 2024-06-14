@@ -64,16 +64,16 @@
             app:layout_constraintEnd_toEndOf="parent" />
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_valid_score"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:background="@drawable/circle_background"
             android:gravity="center_vertical|center_horizontal"
-            android:text="95"
             android:textColor="?attr/colorOnPrimary"
             android:layout_marginTop="24dp"
             app:layout_constraintStart_toStartOf="@+id/tv_description_select_for_you"
             app:layout_constraintTop_toBottomOf="@+id/tv_description_select_for_you"
-            tools:ignore="HardcodedText" />
+            tools:text="N%" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

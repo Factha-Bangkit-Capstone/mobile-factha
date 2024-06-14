@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.bangkit.factha.data.helper.InjectionAuth
 import com.bangkit.factha.data.helper.InjectionMain
 import com.bangkit.factha.view.activity.MainViewModel
+import com.bangkit.factha.view.activity.article.AddArticleViewModel
 import com.bangkit.factha.view.activity.auth.LoginViewModel
 import com.bangkit.factha.view.activity.auth.RegisterViewModel
 import com.bangkit.factha.view.fragment.main.SettingViewModel
@@ -30,6 +31,10 @@ class ViewModelFactory private constructor(private val context: Context) : ViewM
             modelClass.isAssignableFrom(SettingViewModel::class.java) -> {
                 val repository = InjectionMain.provideRepository(context)
                 SettingViewModel(repository) as T
+            }
+            modelClass.isAssignableFrom(AddArticleViewModel::class.java) -> {
+                val repository = InjectionMain.provideRepository(context)
+                AddArticleViewModel(repository) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
