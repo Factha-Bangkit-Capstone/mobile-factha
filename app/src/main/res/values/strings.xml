@@ -71,6 +71,13 @@
     <string name="factha_copyrights">Factha (2024) | Allrights reserved</string>
     <string name="tentang_aplikasi">Tentang Aplikasi</string>
     <string name="edit_profile">Edit Profile</string>
+    <string name="save">Save</string>
+    <string name="change_photo">Change photo</string>
+    <string name="fulana">Fulana</string>
+    <string name="change_password">Change password?</string>
+    <string name="status_account">Status Account</string>
+    <string name="non_premium">Non premium</string>
+    <string name="new_password">new password</string>
     <string-array name="language_options">
         <item name="indonesia">Indonesia</item>
         <item name="english">English</item>
