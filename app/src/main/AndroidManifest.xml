@@ -14,9 +14,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Factha"
         tools:targetApi="31" >
-<!--        <activity-->
-<!--            android:name=".view.activity.settings.EditProfileActivity"-->
-<!--            android:exported="false" />-->
         <activity
             android:name=".view.activity.settings.AboutActivity"
             android:exported="false" />
@@ -33,6 +30,7 @@
             android:exported="false" />
         <activity
             android:name=".view.activity.settings.ProfileActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden"
             android:exported="false" />
         <activity
             android:name=".view.activity.article.AddArticleActivity"
