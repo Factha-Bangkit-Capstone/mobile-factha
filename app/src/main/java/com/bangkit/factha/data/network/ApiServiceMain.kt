@@ -1,10 +1,14 @@
 package com.bangkit.factha.data.network
 
 import com.bangkit.factha.data.response.AddNewsRequest
+import com.bangkit.factha.data.response.DeleteSavedNewsResponse
 import com.bangkit.factha.data.response.NewsResponse
 import com.bangkit.factha.data.response.ProfileResponse
+import com.bangkit.factha.data.response.SaveNewsRequest
+import com.bangkit.factha.data.response.SavedNewsResponse
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Multipart
@@ -35,4 +39,22 @@ interface ApiServiceMain {
         @Header("X-Auth-Token") token: String,
         @Body requestBody: AddNewsRequest
     ): Response<NewsResponse>
+
+    @POST("savedNews")
+    suspend fun saveNews(
+        @Header("X-Auth-Token") token: String,
+        @Body requestBody: SaveNewsRequest
+    ): Response<SavedNewsResponse>
+
+    @GET("savedNews/{userId}")
+    suspend fun getSavedNews(
+        @Header("X-Auth-Token") token: String,
+        @Path("userId") userId: String
+    ): Response<SavedNewsResponse>
+
+    @DELETE("savedNews/{savedNewsId}")
+    suspend fun deleteSavedNews(
+        @Header("X-Auth-Token") token: String,
+        @Path("savedNewsId") savedNewsId: String
+    ): Response<Unit>
 }

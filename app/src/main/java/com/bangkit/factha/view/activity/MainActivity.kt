@@ -11,12 +11,12 @@ import com.bangkit.factha.R
 import com.bangkit.factha.databinding.ActivityMainBinding
 import com.bangkit.factha.view.ViewModelFactory
 import com.bangkit.factha.view.activity.splashscreen.SplashScreenActivity
-import com.bangkit.factha.view.fragment.main.ArticleFragment
 import com.bangkit.factha.view.fragment.main.HomeFragment
 import com.bangkit.factha.view.fragment.main.SaveFragment
 import com.bangkit.factha.view.fragment.main.SettingFragment
 import com.bangkit.factha.data.helper.Result
 import com.bangkit.factha.data.response.ProfileResponse
+import com.bangkit.factha.view.fragment.main.ArticleFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 @Suppress("DEPRECATION")

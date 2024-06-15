@@ -81,6 +81,9 @@
     <string name="title">Title</string>
     <string name="dialog_long_text_example_text">Teks berita</string>
     <string name="n_percent">N%</string>
+    <string name="berita_penuh">Berita Penuh</string>
+    <string name="beritanya_disini_example">Beritanya disini</string>
+    <string name="hoaks">HOAKS</string>
     <string-array name="language_options">
         <item name="indonesia">Indonesia</item>
         <item name="english">English</item>
