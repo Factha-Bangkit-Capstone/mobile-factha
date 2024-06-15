@@ -1,60 +1,106 @@
 package com.bangkit.factha.view.fragment.main
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bangkit.factha.R
+import com.bangkit.factha.data.helper.Result
+import com.bangkit.factha.data.network.ApiConfig
+import com.bangkit.factha.data.preference.UserPreferences
+import com.bangkit.factha.data.preference.dataStore
+import com.bangkit.factha.data.remote.MainRepository
+import com.bangkit.factha.databinding.FragmentHomeBinding
+import com.bangkit.factha.databinding.FragmentSaveBinding
+import com.bangkit.factha.view.ViewModelFactory
+import com.bangkit.factha.view.activity.MainViewModel
+import com.bangkit.factha.view.adapter.ArticleAdapter
+import com.bangkit.factha.view.adapter.HomeAdapter
+import com.bangkit.factha.viewmodels.BookmarkViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [SaveFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class SaveFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private var _binding: FragmentSaveBinding? = null
+    private val binding get() = _binding!!
+    private lateinit var homeAdapter: HomeAdapter
+    private lateinit var viewModel: BookmarkViewModel
+    private lateinit var repository: MainRepository
+    private var userId: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_save, container, false)
+        _binding = FragmentSaveBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment SaveFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            SaveFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val userPreferences = UserPreferences.getInstance(requireContext().dataStore)
+        val token = runBlocking { userPreferences.token.first() }
+
+        if (token != null) {
+            val apiService = ApiConfig.getMainService(token)
+            repository = MainRepository.getInstance(apiService, userPreferences)
+
+            setupViewModel()
+            observeBookmarkedNews()
+            setupRecyclerView()
+        }
+    }
+
+    private fun setupViewModel() {
+        viewModel = ViewModelProvider(this, ViewModelFactory.getInstance(requireContext())).get(BookmarkViewModel::class.java)
+    }
+
+    private fun setupRecyclerView() {
+        val userPreferences = UserPreferences.getInstance(requireContext().dataStore)
+
+        CoroutineScope(Dispatchers.IO).launch {
+            userId = userPreferences.userId.first()
+            userId?.let {
+                withContext(Dispatchers.Main) {
+                    binding.rvSavedNews.layoutManager = LinearLayoutManager(requireContext())
+                    homeAdapter = HomeAdapter(emptyList(), userId!!, repository) // Modify as per your adapter setup
+                    binding.rvSavedNews.adapter = homeAdapter
                 }
             }
+        }
+    }
+
+    private fun observeBookmarkedNews() {
+        viewModel.bookmarkedNews.observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is Result.Loading -> {
+                    binding.loadingMenuSaved.visibility = View.VISIBLE
+                }
+                is Result.Success -> {
+                    binding.loadingMenuSaved.visibility = View.GONE
+                    val bookmarkedNewsList = result.data
+                    homeAdapter.updateData(bookmarkedNewsList) // Update adapter data
+                }
+                is Result.Error -> {
+                    // Handle error scenario
+                    Log.e("SaveFragment", "Failed to fetch bookmarked news: ${result.error}")
+                }
+            }
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

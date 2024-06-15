@@ -16,19 +16,27 @@ import com.bangkit.factha.databinding.FragmentHomeBinding
 import com.bangkit.factha.view.ViewModelFactory
 import com.bangkit.factha.view.activity.MainViewModel
 import com.bangkit.factha.data.helper.Result
+import com.bangkit.factha.data.network.ApiConfig
 import com.bangkit.factha.data.preference.UserPreferences
 import com.bangkit.factha.data.preference.dataStore
+import com.bangkit.factha.data.remote.MainRepository
 import com.bangkit.factha.view.activity.article.AddArticleActivity
 import com.bangkit.factha.view.activity.settings.AboutActivity
 import com.bangkit.factha.view.adapter.HomeAdapter
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private lateinit var homeAdapter: HomeAdapter
+    private lateinit var repository: MainRepository
+    private var userId: String? = null
 
     private val viewModel by viewModels<MainViewModel> {
         ViewModelFactory.getInstance(requireContext())
@@ -47,20 +55,33 @@ class HomeFragment : Fragment() {
 
         val userPreferences = UserPreferences.getInstance(requireContext().dataStore)
         val token = runBlocking { userPreferences.token.first() }
+
         if (token != null) {
+            val apiService = ApiConfig.getMainService(token)
+            repository = MainRepository.getInstance(apiService, userPreferences)
+
             observeNews()
+            setupRecyclerView()
         }
 
-        setupRecyclerView()
         binding.btnAddArticle.setOnClickListener { addNews() }
         binding.btnWrite.setOnClickListener { addNews() }
         binding.btnWriteIcon.setOnClickListener { addNews() }
     }
 
     private fun setupRecyclerView() {
-        binding.rvSelectedForYou.layoutManager = LinearLayoutManager(requireContext())
-        homeAdapter = HomeAdapter(emptyList())
-        binding.rvSelectedForYou.adapter = homeAdapter
+        val userPreferences = UserPreferences.getInstance(requireContext().dataStore)
+
+        CoroutineScope(Dispatchers.IO).launch {
+            userId = userPreferences.userId.first()
+            userId?.let {
+                withContext(Dispatchers.Main) {
+                    binding.rvSelectedForYou.layoutManager = LinearLayoutManager(requireContext())
+                    homeAdapter = HomeAdapter(emptyList(), it, repository)
+                    binding.rvSelectedForYou.adapter = homeAdapter
+                }
+            }
+        }
     }
 
     private fun observeNews() {
@@ -72,13 +93,14 @@ class HomeFragment : Fragment() {
                 is Result.Success -> {
                     binding.loadingMenuSelectedForYou.visibility = View.GONE
                     val newsData = result.data.newsData ?: emptyList()
-                    homeAdapter = HomeAdapter(newsData)
-                    binding.rvSelectedForYou.adapter = homeAdapter
+                    userId?.let {
+                        homeAdapter = HomeAdapter(newsData, it, repository)
+                        binding.rvSelectedForYou.adapter = homeAdapter
+                    }
                 }
                 is Result.Error -> {
-                    Log.e("Result News Error", "Error: ${result.error}")
+                    Log.e("TAG", "Observe news failed")
                 }
-                else -> { Log.e("Observe News Error", "Observe News Error") }
             }
         }
         viewModel.getNews()

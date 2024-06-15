@@ -13,6 +13,7 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
+        multiDexEnabled = true
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -71,4 +72,5 @@ dependencies {
     implementation("com.github.Ferfalk:SimpleSearchView:0.2.1")
     implementation("com.github.yalantis:ucrop:2.2.8")
 
+    implementation("androidx.multidex:multidex:2.0.1")
 }

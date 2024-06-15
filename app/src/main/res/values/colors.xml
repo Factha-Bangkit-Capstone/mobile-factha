@@ -143,4 +143,6 @@
     <color name="md_theme_surfaceContainerHighest_highContrast">#E1E3DE</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="red">#FF5050</color>
+    <color name="green">#42EB49</color>
 </resources>
