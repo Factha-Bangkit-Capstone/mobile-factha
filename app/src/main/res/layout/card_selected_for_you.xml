@@ -26,21 +26,21 @@
 
         <TextView
             android:id="@+id/tv_title_select_for_you"
-            android:layout_width="210dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:ellipsize="start"
             android:fontFamily="@font/ovo"
+            android:maxLines="4"
             android:text="Card Title"
             android:textColor="@android:color/black"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:maxLines="2"
-            android:ellipsize="end"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/iv_select_for_you"
             app:layout_constraintTop_toTopOf="@+id/iv_select_for_you"
             tools:ignore="HardcodedText"
-            tools:text="Card Title"
-            android:layout_marginStart="16dp"
-            />
+            tools:text="Card Title" />
 
         <TextView
             android:id="@+id/tv_description_select_for_you"

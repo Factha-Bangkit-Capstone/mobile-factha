@@ -7,6 +7,7 @@ import com.bangkit.factha.data.response.NewsResponse
 import com.bangkit.factha.data.response.ProfileResponse
 import com.bangkit.factha.data.response.RegisterResponse
 import com.bangkit.factha.data.response.SaveNewsRequest
+import com.bangkit.factha.data.response.SavedDataItem
 import com.bangkit.factha.data.response.SavedNewsResponse
 import retrofit2.Response
 import retrofit2.http.Body

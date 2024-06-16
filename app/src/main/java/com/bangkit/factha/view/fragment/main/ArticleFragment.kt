@@ -30,8 +30,9 @@ class ArticleFragment : Fragment() {
     private lateinit var homeAdapter: HomeAdapter
     private lateinit var repository: MainRepository
     private var userId: String? = null
-
-    // Obtain viewModel instance using viewModels delegate
+    private val bookmarkViewModel by viewModels<BookmarkViewModel> {
+        ViewModelFactory.getInstance(requireContext())
+    }
     private val viewModel by viewModels<MainViewModel> {
         ViewModelFactory.getInstance(requireContext())
     }
@@ -53,8 +54,8 @@ class ArticleFragment : Fragment() {
             val apiService = ApiConfig.getMainService(token)
             repository = MainRepository.getInstance(apiService, userPreferences)
 
-            observeNews()
             setupRecyclerView()
+            observeNews()
         }
     }
 
@@ -66,7 +67,7 @@ class ArticleFragment : Fragment() {
             userId?.let {
                 withContext(Dispatchers.Main) {
                     binding.rvArticle.layoutManager = LinearLayoutManager(requireContext())
-                    homeAdapter = HomeAdapter(emptyList(), it, repository)
+                    homeAdapter = HomeAdapter(emptyList(), it, repository, bookmarkViewModel, viewLifecycleOwner)
                     binding.rvArticle.adapter = homeAdapter
                 }
             }
@@ -83,7 +84,7 @@ class ArticleFragment : Fragment() {
                     binding.loadingMenuArticle.visibility = View.GONE
                     val newsData = result.data.newsData ?: emptyList()
                     userId?.let {
-                        homeAdapter = HomeAdapter(newsData, it, repository)
+                        homeAdapter = HomeAdapter(newsData, it, repository, bookmarkViewModel, viewLifecycleOwner)
                         binding.rvArticle.adapter = homeAdapter
                     }
                 }

@@ -1,6 +1,7 @@
     package com.bangkit.factha.data.preference
 
     import android.content.Context
+    import android.util.Log
     import androidx.datastore.core.DataStore
     import androidx.datastore.preferences.core.Preferences
     import androidx.datastore.preferences.core.edit
@@ -22,6 +23,8 @@
             private val PASSWORD = stringPreferencesKey("password")
             private val PREMIUM = intPreferencesKey("premium")
             private val IMAGE_B64 = stringPreferencesKey("image_b64")
+            private val SAVEDNEWS_ID = stringPreferencesKey("id")
+            private val NEWS_ID = stringPreferencesKey("newsId")
 
             @Volatile
             private var INSTANCE: UserPreferences? = null
@@ -46,8 +49,6 @@
                 preferences[USER_ID_KEY]
             }
 
-
-
         suspend fun saveUser(token: String, userId: String) {
             dataStore.edit { preferences ->
                 preferences[TOKEN_KEY] = token
@@ -65,6 +66,32 @@
             }
         }
 
+        suspend fun saveSavedNews(id: String, newsId: String) {
+            Log.d("Saving news", "ID: $id, News ID: $newsId")
+            dataStore.edit { preferences ->
+                preferences[SAVEDNEWS_ID] = id
+                preferences[NEWS_ID] = newsId
+            }
+            Log.d("Saved news", "News ID saved: $id, News ID: $newsId")
+        }
+
+        val savedNews: Flow<SavedNews?>
+            get() = dataStore.data.map { preferences ->
+                val id = preferences[SAVEDNEWS_ID]
+                val newsId = preferences[NEWS_ID]
+                Log.d("Saved news retrieved", "ID: $id, News ID: $newsId")
+                SavedNews(id, newsId)
+            }
+
+        suspend fun clearSavedNews() {
+            Log.d("Saved news dihapus", "Clearing saved news")
+            dataStore.edit { preferences ->
+                preferences.remove(SAVEDNEWS_ID)
+                preferences.remove(NEWS_ID)
+            }
+            Log.d("Saved news", "Saved news cleared")
+        }
+
         val userDetails: Flow<UserDetails?>
             get() = dataStore.data.map { preferences ->
                 val name = preferences[NAME]
@@ -75,7 +102,6 @@
 
                 UserDetails(name, email, password, premium, imageB64)
             }
-
 
         suspend fun clearUserDetails() {
             dataStore.edit { preferences ->

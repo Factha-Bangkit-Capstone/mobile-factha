@@ -9,19 +9,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bangkit.factha.R
 import com.bangkit.factha.data.helper.Result
 import com.bangkit.factha.data.network.ApiConfig
 import com.bangkit.factha.data.preference.UserPreferences
 import com.bangkit.factha.data.preference.dataStore
 import com.bangkit.factha.data.remote.MainRepository
-import com.bangkit.factha.databinding.FragmentHomeBinding
 import com.bangkit.factha.databinding.FragmentSaveBinding
 import com.bangkit.factha.view.ViewModelFactory
-import com.bangkit.factha.view.activity.MainViewModel
-import com.bangkit.factha.view.adapter.ArticleAdapter
 import com.bangkit.factha.view.adapter.HomeAdapter
-import com.bangkit.factha.viewmodels.BookmarkViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
@@ -37,7 +32,9 @@ class SaveFragment : Fragment() {
     private lateinit var viewModel: BookmarkViewModel
     private lateinit var repository: MainRepository
     private var userId: String? = null
-
+    private val bookmarkViewModel by viewModels<BookmarkViewModel> {
+        ViewModelFactory.getInstance(requireContext())
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -48,21 +45,26 @@ class SaveFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val userPreferences = UserPreferences.getInstance(requireContext().dataStore)
-        val token = runBlocking { userPreferences.token.first() }
 
-        if (token != null) {
-            val apiService = ApiConfig.getMainService(token)
-            repository = MainRepository.getInstance(apiService, userPreferences)
+        CoroutineScope(Dispatchers.IO).launch {
+            val userPreferences = UserPreferences.getInstance(requireContext().dataStore)
+            val token = userPreferences.token.first()
+            withContext(Dispatchers.Main) {
+                if (token != null) {
+                    val apiService = ApiConfig.getMainService(token)
+                    repository = MainRepository.getInstance(apiService, userPreferences)
 
-            setupViewModel()
-            observeBookmarkedNews()
-            setupRecyclerView()
+                    setupRecyclerView()
+                    setupViewModel()
+                    observeBookmarkedNews()
+                }
+            }
         }
     }
 
     private fun setupViewModel() {
-        viewModel = ViewModelProvider(this, ViewModelFactory.getInstance(requireContext())).get(BookmarkViewModel::class.java)
+        viewModel = ViewModelProvider(this, ViewModelFactory.getInstance(requireContext())).get(
+            BookmarkViewModel::class.java)
     }
 
     private fun setupRecyclerView() {
@@ -73,7 +75,7 @@ class SaveFragment : Fragment() {
             userId?.let {
                 withContext(Dispatchers.Main) {
                     binding.rvSavedNews.layoutManager = LinearLayoutManager(requireContext())
-                    homeAdapter = HomeAdapter(emptyList(), userId!!, repository) // Modify as per your adapter setup
+                    homeAdapter = HomeAdapter(emptyList(), userId!!, repository, bookmarkViewModel, viewLifecycleOwner) // Modify as per your adapter setup
                     binding.rvSavedNews.adapter = homeAdapter
                 }
             }
@@ -89,7 +91,7 @@ class SaveFragment : Fragment() {
                 is Result.Success -> {
                     binding.loadingMenuSaved.visibility = View.GONE
                     val bookmarkedNewsList = result.data
-                    homeAdapter.updateData(bookmarkedNewsList) // Update adapter data
+                    homeAdapter.updateData(bookmarkedNewsList)
                 }
                 is Result.Error -> {
                     // Handle error scenario
