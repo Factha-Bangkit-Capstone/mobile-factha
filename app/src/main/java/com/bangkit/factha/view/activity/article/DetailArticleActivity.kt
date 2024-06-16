@@ -32,7 +32,6 @@ class DetailArticleActivity : AppCompatActivity() {
         viewModel.fetchNewsDetails(newsId)
         binding.btnBack.setOnClickListener { finish() }
 
-
         setupObservers()
     }
 
@@ -59,6 +58,5 @@ class DetailArticleActivity : AppCompatActivity() {
             }
         })
     }
-
 
 }

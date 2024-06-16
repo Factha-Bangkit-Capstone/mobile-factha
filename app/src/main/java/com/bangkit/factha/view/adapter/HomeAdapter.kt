@@ -6,7 +6,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
 import com.bangkit.factha.R
 import com.bangkit.factha.data.remote.MainRepository
@@ -15,22 +16,26 @@ import com.bangkit.factha.databinding.CardSelectedForYouBinding
 import com.bangkit.factha.view.activity.article.DetailArticleActivity
 import com.bumptech.glide.Glide
 import com.bangkit.factha.data.helper.Result
+import com.bangkit.factha.view.ViewModelFactory
+import com.bangkit.factha.view.activity.MainViewModel
+import com.bangkit.factha.view.fragment.main.BookmarkViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import retrofit2.HttpException
-import java.io.IOException
 
 class HomeAdapter(
     private var news: List<NewsDataItem?>,
     private val userId: String,
-    private val repository: MainRepository
+    private val repository: MainRepository,
+    private val bookmarkViewModel: BookmarkViewModel,
+    private val lifecycleOwner: LifecycleOwner,
 ) : RecyclerView.Adapter<HomeAdapter.NewsViewHolder>() {
 
     var onItemClick: ((String) -> Unit)? = null
+    private var bookmarkedNewsIds: List<String> = emptyList()
 
     inner class NewsViewHolder(private val binding: CardSelectedForYouBinding) : RecyclerView.ViewHolder(binding.root) {
+
         fun bind(news: NewsDataItem?) {
             val imageBytes = Base64.decode(news?.imageB64, Base64.DEFAULT)
             with(binding) {
@@ -47,6 +52,19 @@ class HomeAdapter(
                 } else {
                     tvValidScore.text = "F"
                     tvValidScore.setBackgroundResource(R.drawable.circle_background)
+                }
+
+                fun updateIconFirst(isBookmarked: Boolean) {
+                    if (isBookmarked) {
+                        binding.btnSaveArticle.setImageResource(R.drawable.baseline_bookmark_24)
+                    } else {
+                        binding.btnSaveArticle.setImageResource(R.drawable.baseline_bookmark_border_24)
+                    }
+                }
+
+                bookmarkViewModel.savedNewsList.observe(lifecycleOwner) { savedNews ->
+                    val isBookmarked = savedNews.any { it == news?.newsId }
+                    updateIconFirst(isBookmarked)
                 }
 
                 itemView.setOnClickListener {
@@ -95,7 +113,6 @@ class HomeAdapter(
                         }
                     }
                 }
-
             }
         }
     }
@@ -116,4 +133,8 @@ class HomeAdapter(
         notifyDataSetChanged()
     }
 
+    fun updateBookmarkedNews(bookmarkedNewsIds: List<String>) {
+        this.bookmarkedNewsIds = bookmarkedNewsIds
+        notifyDataSetChanged()
+    }
 }

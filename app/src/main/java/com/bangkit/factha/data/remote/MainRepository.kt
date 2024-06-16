@@ -1,10 +1,14 @@
 package com.bangkit.factha.data.remote
 
+import android.content.Context
 import android.util.Log
+import android.widget.Toast
+import androidx.lifecycle.LiveData
 import com.bangkit.factha.data.helper.Result
 import com.bangkit.factha.data.network.ApiConfig
 import com.bangkit.factha.data.network.ApiServiceAuth
 import com.bangkit.factha.data.network.ApiServiceMain
+import com.bangkit.factha.data.preference.SavedNews
 import com.bangkit.factha.data.preference.SettingProfile
 import com.bangkit.factha.data.preference.UserDetails
 import com.bangkit.factha.data.preference.UserPreferences
@@ -16,6 +20,7 @@ import com.bangkit.factha.data.response.NewsResponse
 import com.bangkit.factha.data.response.ProfileResponse
 import com.bangkit.factha.data.response.RegisterResponse
 import com.bangkit.factha.data.response.SaveNewsRequest
+import com.bangkit.factha.data.response.SavedDataItem
 import com.bangkit.factha.data.response.SavedNewsResponse
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -26,11 +31,14 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
+import retrofit2.Response
 
 class MainRepository(
     private val apiServiceMain: ApiServiceMain,
-    private val userPreferences: UserPreferences
+    val userPreferences: UserPreferences
 ) {
+
+    private val context: Context? = null
 
     suspend fun getProfile(): Result<ProfileResponse> {
         return try {
@@ -286,9 +294,6 @@ class MainRepository(
         }
     }
 
-
-
-
     suspend fun getSavedNews(): Result<SavedNewsResponse> {
         return try {
             val token = userPreferences.token.first() ?: ""
@@ -311,6 +316,39 @@ class MainRepository(
         }
     }
 
+    suspend fun saveSavedNewsDirect(): Result<SavedNewsResponse> {
+        return try {
+            val token = userPreferences.token.first() ?: ""
+            val userId = userPreferences.userId.first() ?: ""
+            Log.d("useridsrepo", "$userId")
+            val response = apiServiceMain.getSavedNews("Bearer $token", userId)
+
+            if (response.isSuccessful) {
+                val savedNewsResponse = response.body()
+                if (savedNewsResponse != null) {
+                    val userDetails = savedNewsResponse.data?.firstOrNull()
+                    userDetails?.let {
+                        val id = it.id ?: ""
+                        val newsId = it.newsId ?: ""
+                        userPreferences.saveSavedNews(id, newsId) // Save to data store
+                        Log.d("saved bro saved", "$newsId")
+                    }
+                    Result.Success(savedNewsResponse)
+                } else {
+                    Result.Error("Empty response body")
+                }
+            } else {
+                Result.Error("Failed to get profile data: ${response.code()}")
+            }
+        } catch (e: Exception) {
+            Result.Error("Get saved news error: ${e.message}")
+        }
+    }
+
+
+    suspend fun deleteSavedNews() {
+        userPreferences.clearSavedNews()
+    }
 
 
     companion object {
