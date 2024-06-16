@@ -6,11 +6,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.bangkit.factha.data.helper.InjectionAuth
 import com.bangkit.factha.data.helper.InjectionMain
+import com.bangkit.factha.data.network.ApiConfigOcr
+import com.bangkit.factha.data.remote.OcrRepository
 import com.bangkit.factha.view.activity.MainViewModel
 import com.bangkit.factha.view.activity.article.AddArticleViewModel
 import com.bangkit.factha.view.activity.article.DetailArticleViewModel
+import com.bangkit.factha.view.activity.article.OcrViewModel
 import com.bangkit.factha.view.activity.auth.LoginViewModel
 import com.bangkit.factha.view.activity.auth.RegisterViewModel
+import com.bangkit.factha.view.activity.settings.ProfileViewModel
 import com.bangkit.factha.view.fragment.main.SettingViewModel
 import com.bangkit.factha.viewmodels.BookmarkViewModel
 
@@ -45,6 +49,13 @@ class ViewModelFactory private constructor(private val context: Context) : ViewM
             modelClass.isAssignableFrom(BookmarkViewModel::class.java) -> {
                 val repository = InjectionMain.provideRepository(context)
                 BookmarkViewModel(repository) as T
+            }
+            modelClass.isAssignableFrom(ProfileViewModel::class.java) -> {
+                val repository = InjectionMain.provideRepository(context)
+                ProfileViewModel(repository) as T
+            }
+            modelClass.isAssignableFrom(OcrViewModel::class.java) -> {
+                OcrViewModel(OcrRepository(ApiConfigOcr.getOcrService())) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }

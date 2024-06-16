@@ -64,7 +64,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:src="@drawable/avatar" />
+                android:src="@color/white" />
 
             <TextView
                 android:id="@+id/change_photo_tv"
@@ -75,7 +75,7 @@
                 android:focusable="true"
                 android:fontFamily="@font/montserrat_medium"
                 android:text="@string/change_photo"
-                android:textColor="@color/md_theme_onSurfaceVariant"
+                android:textColor="?attr/colorPrimary"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -154,33 +154,20 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <TextView
-                android:id="@+id/change_password_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:fontFamily="@font/montserrat_medium"
-                android:text="@string/change_password"
-                android:textColor="?attr/colorPrimary"
-                android:textSize="14sp"
-                app:layout_constraintTop_toBottomOf="@id/premium_status_input_layout"
-                app:layout_constraintStart_toStartOf="parent" />
-
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/password_input_layout"
+                android:id="@+id/old_password_input_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                app:layout_constraintTop_toBottomOf="@id/change_password_tv"
+                app:layout_constraintTop_toBottomOf="@id/premium_status_input_layout"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:boxStrokeColor="@color/md_theme_secondary"
                 app:boxStrokeWidth="2dp"
                 app:boxBackgroundMode="outline"
                 app:hintEnabled="true"
-                android:hint="@string/password">
+                android:hint="@string/old_password"
+                app:endIconMode="password_toggle">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
@@ -196,15 +183,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                app:layout_constraintTop_toBottomOf="@id/password_input_layout"
+                app:layout_constraintTop_toBottomOf="@id/old_password_input_layout"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:boxStrokeColor="@color/md_theme_secondary"
                 app:boxStrokeWidth="2dp"
                 app:boxBackgroundMode="outline"
                 app:hintEnabled="true"
-                android:hint="@string/new_password">
+                android:hint="@string/new_password"
+                app:endIconMode="password_toggle">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
@@ -214,6 +201,7 @@
                     android:textSize="14sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -233,10 +221,22 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="18dp"
+            android:enabled="false"
             android:background="@color/md_theme_secondary"
             android:fontFamily="@font/montserrat_bold"
             android:text="@string/save"
             android:textColor="@color/white" />
     </androidx.cardview.widget.CardView>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

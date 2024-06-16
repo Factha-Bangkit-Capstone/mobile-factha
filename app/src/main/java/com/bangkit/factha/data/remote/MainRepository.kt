@@ -10,6 +10,7 @@ import com.bangkit.factha.data.preference.UserDetails
 import com.bangkit.factha.data.preference.UserPreferences
 import com.bangkit.factha.data.preference.dataStore
 import com.bangkit.factha.data.response.AddNewsRequest
+import com.bangkit.factha.data.response.EditProfileResponse
 import com.bangkit.factha.data.response.NewsDataItem
 import com.bangkit.factha.data.response.NewsResponse
 import com.bangkit.factha.data.response.ProfileResponse
@@ -60,6 +61,7 @@ class MainRepository(
         }
     }
 
+
     fun getToken(): Flow<String?> {
         return userPreferences.token
     }
@@ -100,6 +102,28 @@ class MainRepository(
             Result.Error("Error occurred: ${e.message}")
         }
     }
+
+    suspend fun editProfile(image: String, name: String, email: String, body: String, oldPassword: String,  newPassword: String): Result<EditProfileResponse> {
+        return try {
+            val token = userPreferences.token.first() ?: ""
+            val userId = userPreferences.userId.first() ?: ""
+            val response = apiServiceMain.editProfile(userId,"Bearer $token", image, name, email, body, oldPassword, newPassword)
+            if (response.isSuccessful) {
+                val registerResponse = response.body()
+                if (registerResponse != null) {
+                    Result.Success(registerResponse)
+                } else {
+                    Result.Error("Empty response body")
+                }
+            } else {
+                Result.Error("Failed to Edit Profile: ${response.code()}")
+            }
+        } catch (e: Exception) {
+            Log.e("Edit Profile", "Edit Profile Error", e)
+            Result.Error("Edit Profile Error: ${e.message}")
+        }
+    }
+
 
     suspend fun getNewsDetail(newsId: String): Result<NewsDataItem?> {
         return try {

@@ -70,24 +70,18 @@ class ArticleAdapter(
                                 )
                             }
 
-                            // Handle toggleResult
                             when (toggleResult) {
                                 is Result.Success -> {
                                     val isBookmarked = toggleResult.data
-                                    // Update UI or icon based on the updated bookmark state
                                     updateBookmarkIcon(isBookmarked)
                                 }
                                 is Result.Error -> {
-                                    // Handle error state
-                                    updateBookmarkIcon(true) // Optionally revert UI change on error
+                                    updateBookmarkIcon(true)
                                     Log.e("MainRepository", "Failed to toggle bookmark: ${toggleResult.error}")
                                 }
                                 Result.Loading -> {
-                                    // Handle loading state if needed
-                                    // You can optionally implement loading indicators or other UI feedback here
                                 }
                                 null -> {
-                                    // Handle unexpected null result
                                     Log.e("MainRepository", "Unexpected null result from toggleBookmark")
                                 }
                             }

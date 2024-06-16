@@ -13,11 +13,13 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
@@ -32,6 +34,8 @@ import com.bangkit.factha.data.preference.dataStore
 import com.bangkit.factha.databinding.ActivityAddArticleBinding
 import com.bangkit.factha.view.activity.article.AddArticleViewModel
 import com.bangkit.factha.view.ViewModelFactory
+import com.bangkit.factha.view.activity.auth.LoginActivity
+import com.bangkit.factha.view.activity.auth.RegisterViewModel
 import com.yalantis.ucrop.UCrop
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
@@ -43,7 +47,11 @@ class AddArticleActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAddArticleBinding
     private lateinit var addArticleViewModel: AddArticleViewModel
+    private val viewModelOcr by viewModels<OcrViewModel> {
+        ViewModelFactory.getInstance(this)
+    }
     private var currentImageUri: Uri? = null
+    private var currentImageUriOcr: Uri? = null
 
     private val uCropFunction = object : ActivityResultContract<List<Uri>, Uri>() {
         override fun createIntent(context: Context, input: List<Uri>): Intent {
@@ -51,8 +59,6 @@ class AddArticleActivity : AppCompatActivity() {
             val uriOutput = input[1]
 
             val uCrop = UCrop.of(uriInput, uriOutput)
-                .withAspectRatio(5f, 5f)
-                .withMaxResultSize(800, 800)
 
             return uCrop.getIntent(context)
         }
@@ -67,7 +73,16 @@ class AddArticleActivity : AppCompatActivity() {
             currentImageUri = uri
             binding.ivThumbnailImageUploaded.setImageURI(uri)
             binding.ivImagePreview.setImageURI(uri)
-            Log.i("tes in base64 img encode", uriToBase64(currentImageUri!!))
+        }
+    }
+
+    private val cropImageOcr = registerForActivityResult(uCropFunction) { uri ->
+        if (uri != Uri.EMPTY) {
+            currentImageUriOcr = uri
+
+            val imageTmp = ImageView(this)
+            imageTmp.setImageURI(currentImageUriOcr)
+            showImageAlertDialog(imageTmp)
         }
     }
 
@@ -82,6 +97,17 @@ class AddArticleActivity : AppCompatActivity() {
         }
     }
 
+    private val launcherGalleryOcr = registerForActivityResult(
+        ActivityResultContracts.PickVisualMedia()
+    ) { uri: Uri? ->
+        if (uri != null) {
+            currentImageUriOcr = uri
+            showImageOcr()
+        } else {
+            Log.d("PhotoPicker", "No media selected")
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddArticleBinding.inflate(layoutInflater)
@@ -89,6 +115,7 @@ class AddArticleActivity : AppCompatActivity() {
 
         setupViewModel()
         setup()
+        observeViewModelOcr()
     }
 
     private fun setupViewModel() {
@@ -99,6 +126,8 @@ class AddArticleActivity : AppCompatActivity() {
     private fun setup() {
         binding.btnBack.setOnClickListener { finish() }
         binding.btnUploadArticle.setOnClickListener { startGallery() }
+        binding.ocrIcon.setOnClickListener { startGalleryOcr() }
+        binding.ocrInput.setOnClickListener { startGalleryOcr() }
         binding.btnSubmit.setOnClickListener { submitArticle() }
         setupTitle()
         setupLongTextInput()
@@ -167,13 +196,30 @@ class AddArticleActivity : AppCompatActivity() {
         launcherGallery.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
     }
 
+    private fun startGalleryOcr() {
+        launcherGalleryOcr.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+    }
+
     private fun showImage() {
         currentImageUri?.let { uri ->
             val uriOutput = File(filesDir, "croppedImage.jpg").toUri()
-
+            Log.i("ini yang show image", uriOutput.toString())
             val listUri = listOf(uri, uriOutput)
             cropImage.launch(listUri)
         }
+    }
+
+    private fun showImageOcr() {
+        currentImageUriOcr?.let { uri ->
+            val uriOutput = File(filesDir, "croppedImageOcr.jpg").toUri()
+            val listUri = listOf(uri, uriOutput)
+            cropImageOcr.launch(listUri)
+        }
+    }
+
+
+    private fun postOcr(imageBase64: String) {
+        viewModelOcr.postOcr(imageBase64)
     }
 
     private fun updatePreviewTitle(title: String) {
@@ -218,6 +264,50 @@ class AddArticleActivity : AppCompatActivity() {
                 }
             }
         })
+    }
+
+    private fun observeViewModelOcr() {
+        viewModelOcr.ocrResult.observe(this, Observer { result ->
+            when (result) {
+                is Result.Loading -> {
+                    binding.progressBar.visibility = View.VISIBLE
+                }
+                is Result.Success -> {
+                    binding.progressBar.visibility = View.GONE
+                    AlertDialog.Builder(this).apply {
+                        setTitle("Success!")
+                        setMessage("Success get text from the image!")
+                        setPositiveButton("Oke", null)
+                        val recognizedText = result.data.recognizedText ?: "No text recognized"
+                        binding.edArticleForm.setText(recognizedText.lowercase())
+                        create()
+                        show()
+                    }
+                }
+                is Result.Error -> {
+                    binding.progressBar.visibility = View.GONE
+                    AlertDialog.Builder(this).apply {
+                        setTitle("Fail!")
+                        setMessage("Can't OCR!")
+                        setPositiveButton("OK", null)
+                        create()
+                        show()
+                    }
+                }
+            }
+        })
+    }
+
+    private fun showImageAlertDialog(image: ImageView) {
+        val builder = AlertDialog.Builder(this)
+            .setMessage("Scan Text from the Image")
+            .setPositiveButton("OK") { dialog, _ -> dialog.dismiss()
+                Log.i("tes aja ocr",currentImageUriOcr?.let { uriToBase64(it) } ?: "" )
+                postOcr(currentImageUriOcr?.let { uriToBase64(it) } ?: "")
+            }
+            .setView(image)
+
+        builder.create().show()
     }
 
     private fun uriToBase64(uri: Uri): String {
