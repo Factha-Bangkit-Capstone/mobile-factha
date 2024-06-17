@@ -11,8 +11,8 @@
     <string name="title_menu_4">List Berita Teranalisis</string>
     <string name="desc_menu_4">Factha akan menampilkan berita yang telah kamu dan seluruh pengguna Factha telah masukkan, mari bergabung dengan kami dalam berkontribusi untuk menjaga integrasi informasi!</string>
     <string name="buat_akun">Buat Akun</string>
-    <string name="setting_heading1">Bahasa</string>
-    <string name="setting_subheading1">Indonesia, Inggris</string>
+    <string name="setting_heading1">Bahasa, Inggris</string>
+    <string name="setting_subheading1">Indonesia</string>
     <string name="setting_heading2">Pemberitahuan</string>
     <string name="setting_subheading2">Atur pemberitahuan</string>
     <string name="setting_heading3">Tentang aplikasi</string>
@@ -86,6 +86,8 @@
     <string name="hoaks">HOAKS</string>
     <string name="old_password">old password</string>
     <string name="ocr_input">Try OCR Input</string>
+    <string name="cari_berita">Cari Berita</string>
+    <string name="mencari_berita">Mencari Berita</string>
     <string-array name="language_options">
         <item name="indonesia">Indonesia</item>
         <item name="english">English</item>

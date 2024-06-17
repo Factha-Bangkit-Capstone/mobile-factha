@@ -2,8 +2,10 @@ package com.bangkit.factha.data.remote
 
 import android.content.Context
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.bangkit.factha.data.helper.Result
 import com.bangkit.factha.data.network.ApiConfig
 import com.bangkit.factha.data.network.ApiServiceAuth
@@ -31,14 +33,14 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
+import retrofit2.Call
+import retrofit2.Callback
 import retrofit2.Response
 
 class MainRepository(
     private val apiServiceMain: ApiServiceMain,
     val userPreferences: UserPreferences
 ) {
-
-    private val context: Context? = null
 
     suspend fun getProfile(): Result<ProfileResponse> {
         return try {
@@ -350,6 +352,48 @@ class MainRepository(
         userPreferences.clearSavedNews()
     }
 
+    suspend fun searchNews(keyword: String): Result<NewsResponse> {
+        return try {
+            val token = userPreferences.token.first() ?: ""
+            val response = apiServiceMain.searchNews("Bearer $token", keyword)
+
+            if (response.isSuccessful) {
+                val body = response.body()
+                if (body != null) {
+                    Result.Success(body)
+                } else {
+                    Result.Error("Response body is null")
+                }
+            } else {
+                Result.Error("Failed to find news: ${response.message()} (${response.code()})")
+            }
+        } catch (e: Exception) {
+            Result.Error("Find News error: ${e.message}")
+        }
+    }
+
+/*    suspend fun searchUser(keyword: String) {
+        val token = userPreferences.token.first() ?: ""
+        val response = apiServiceMain.searchNews("Bearer $token", keyword)
+
+        response.enqueue(object : Callback<NewsResponse> {
+            override fun onResponse(
+                call: Call<NewsResponse>,
+                response: Response<NewsResponse>
+            ) {
+                if (response.isSuccessful) {
+                    _listNews.value = response.body()?.newsData as List<NewsDataItem>
+                } else {
+                    Log.e("Fail", "onFailure: ${response.message()}")
+                }
+            }
+            override fun onFailure(call: Call<NewsResponse>, t: Throwable) {
+                Log.e("APIRequest", "onFailure: ${t.message}")
+
+                t.printStackTrace()
+            }
+        })
+    }*/
 
     companion object {
         @Volatile
