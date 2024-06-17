@@ -9,8 +9,10 @@ import androidx.lifecycle.viewModelScope
 import com.bangkit.factha.data.remote.MainRepository
 import com.bangkit.factha.data.helper.Result
 import com.bangkit.factha.data.preference.UserDetails
+import com.bangkit.factha.data.response.NewsDataItem
 import com.bangkit.factha.data.response.NewsResponse
 import com.bangkit.factha.data.response.ProfileResponse
+import com.bangkit.factha.view.adapter.HomeAdapter
 import kotlinx.coroutines.launch
 
 class MainViewModel(private val repository: MainRepository) : ViewModel() {
@@ -20,6 +22,12 @@ class MainViewModel(private val repository: MainRepository) : ViewModel() {
 
     private val _news = MutableLiveData<Result<NewsResponse>>()
     val news: LiveData<Result<NewsResponse>> get() = _news
+
+    private val _searchedNews = MutableLiveData<Result<ProfileResponse>>()
+    val searchedNews: LiveData<Result<ProfileResponse>> = _searchedNews
+
+    private val _listNews = MutableLiveData<List<NewsDataItem>>()
+    val listNews : LiveData<List<NewsDataItem>> = _listNews
 
 
     fun getProfile() {
@@ -36,6 +44,13 @@ class MainViewModel(private val repository: MainRepository) : ViewModel() {
         viewModelScope.launch {
             val result = repository.getNews()
             _news.postValue(result)
+        }
+    }
+
+    fun searchNews(keyword: String) {
+        viewModelScope.launch {
+            val result = repository.searchNews(keyword)
+            _listNews.postValue(result as List<NewsDataItem>)
         }
     }
 

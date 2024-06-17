@@ -1,6 +1,8 @@
 package com.bangkit.factha.view.fragment.main
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +15,7 @@ import com.bangkit.factha.data.network.ApiConfig
 import com.bangkit.factha.data.preference.UserPreferences
 import com.bangkit.factha.data.preference.dataStore
 import com.bangkit.factha.data.remote.MainRepository
+import com.bangkit.factha.data.response.NewsDataItem
 import com.bangkit.factha.databinding.FragmentArticleBinding
 import com.bangkit.factha.view.ViewModelFactory
 import com.bangkit.factha.view.activity.MainViewModel
@@ -56,6 +59,7 @@ class ArticleFragment : Fragment() {
 
             setupRecyclerView()
             observeNews()
+            searchNews()
         }
     }
 
@@ -96,8 +100,48 @@ class ArticleFragment : Fragment() {
         viewModel.getNews()
     }
 
+    private fun searchNews() {
+        with(binding) {
+            searchView.setupWithSearchBar(searchBar)
+            searchView.editText.setOnEditorActionListener { textView, actionId, event ->
+                searchBar.setText(searchView.text)
+                searchView.hide()
+                false
+            }
+            searchView.editText.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
+                override fun afterTextChanged(s: Editable?) {
+                    val keyword = s.toString().trim()
+                    showLoading(true)
+                    viewModel.searchNews(keyword)
+                    showLoading(false)
+                }
+            })
+            searchView.setText(searchView.text)
+        }
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
+
+    private fun showLoading(state: Boolean) { if (state) binding.loadingMenuArticle.visibility = View.VISIBLE else binding.loadingMenuArticle.visibility = View.GONE }
+
+/*    private fun setProfileData(consumerProfiles: List<NewsDataItem>) { userId?.let {
+        val adapter = HomeAdapter(
+            consumerProfiles,
+            it,
+            repository,
+            bookmarkViewModel,
+            viewLifecycleOwner
+        )
+        adapter.submitList(consumerProfiles)
+        binding.rvArticle.adapter = adapter
+    }
+    }*/
+
 }
