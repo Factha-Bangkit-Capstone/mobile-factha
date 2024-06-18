@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import com.bangkit.factha.data.preference.SettingProfile
-import com.bangkit.factha.data.preference.UserDetails
 import com.bangkit.factha.data.remote.MainRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

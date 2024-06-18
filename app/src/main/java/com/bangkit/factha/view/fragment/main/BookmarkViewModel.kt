@@ -4,15 +4,10 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
-import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import com.bangkit.factha.data.helper.Result
-import com.bangkit.factha.data.preference.SavedNews
 import com.bangkit.factha.data.remote.MainRepository
 import com.bangkit.factha.data.response.NewsDataItem
-import com.bangkit.factha.data.response.ProfileResponse
-import com.bangkit.factha.data.response.SavedNewsResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -31,7 +26,7 @@ class BookmarkViewModel(private val repository: MainRepository) : ViewModel() {
         fetchSavedNews()
     }
 
-    fun getSavedNews() {
+    private fun getSavedNews() {
         viewModelScope.launch(Dispatchers.IO) {
             _bookmarkedNews.postValue(Result.Loading)
             val result = repository.getSavedNews()
@@ -55,11 +50,9 @@ class BookmarkViewModel(private val repository: MainRepository) : ViewModel() {
         }
     }
 
-    fun fetchSavedNews() {
+    private fun fetchSavedNews() {
         viewModelScope.launch(Dispatchers.IO) {
-            val result = repository.saveSavedNewsDirect()
-
-            when (result) {
+            when (val result = repository.saveSavedNewsDirect()) {
                 is Result.Success -> {
                     val newsIds = result.data.data?.mapNotNull { it?.newsId } ?: emptyList()
 
@@ -78,28 +71,4 @@ class BookmarkViewModel(private val repository: MainRepository) : ViewModel() {
         }
     }
 
-    val savedNews: LiveData<SavedNews?> = repository.userPreferences.savedNews.asLiveData()
-
-    suspend fun removeSavedNewsDirect() {
-        repository.deleteSavedNews()
-    }
-
-    fun toggleBookmark(newsId: String) {
-        viewModelScope.launch(Dispatchers.IO) {
-            when (val result = repository.toggleBookmark(newsId)) {
-                is Result.Success -> {
-                    getSavedNews()
-                }
-                is Result.Error -> {
-                    _bookmarkedNews.postValue(Result.Error(result.error))
-                }
-                Result.Loading -> TODO()
-            }
-        }
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        // Perform any necessary cleanup operations
-    }
 }

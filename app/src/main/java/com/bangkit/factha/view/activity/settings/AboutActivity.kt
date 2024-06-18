@@ -3,12 +3,8 @@ package com.bangkit.factha.view.activity.settings
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.bangkit.factha.R
 import com.bangkit.factha.databinding.ActivityAboutBinding
 
 class AboutActivity : AppCompatActivity() {

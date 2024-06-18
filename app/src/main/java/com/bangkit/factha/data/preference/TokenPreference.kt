@@ -1,20 +1,19 @@
+ package com.bangkit.factha.data.preference
 
-    package com.bangkit.factha.data.preference
+ import android.content.Context
+ import android.util.Log
+ import androidx.datastore.core.DataStore
+ import androidx.datastore.preferences.core.Preferences
+ import androidx.datastore.preferences.core.edit
+ import androidx.datastore.preferences.core.intPreferencesKey
+ import androidx.datastore.preferences.core.stringPreferencesKey
+ import androidx.datastore.preferences.preferencesDataStore
+ import kotlinx.coroutines.flow.Flow
+ import kotlinx.coroutines.flow.map
 
-    import android.content.Context
-    import android.util.Log
-    import androidx.datastore.core.DataStore
-    import androidx.datastore.preferences.core.Preferences
-    import androidx.datastore.preferences.core.edit
-    import androidx.datastore.preferences.core.intPreferencesKey
-    import androidx.datastore.preferences.core.stringPreferencesKey
-    import androidx.datastore.preferences.preferencesDataStore
-    import kotlinx.coroutines.flow.Flow
-    import kotlinx.coroutines.flow.map
+ val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "user_prefs")
 
-    val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "user_prefs")
-
-    class UserPreferences(private val dataStore: DataStore<Preferences>) {
+ class UserPreferences(private val dataStore: DataStore<Preferences>) {
 
         companion object {
             private val TOKEN_KEY = stringPreferencesKey("token")
@@ -115,4 +114,4 @@
                 preferences.remove(IMAGE_B64)
             }
         }
-    }
+ }

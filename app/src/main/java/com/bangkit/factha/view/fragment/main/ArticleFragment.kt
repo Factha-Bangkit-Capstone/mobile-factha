@@ -1,9 +1,6 @@
 package com.bangkit.factha.view.fragment.main
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
@@ -11,23 +8,20 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bangkit.factha.data.helper.Result
 import com.bangkit.factha.data.network.ApiConfig
 import com.bangkit.factha.data.preference.UserPreferences
 import com.bangkit.factha.data.preference.dataStore
 import com.bangkit.factha.data.remote.MainRepository
-import com.bangkit.factha.data.response.NewsDataItem
 import com.bangkit.factha.databinding.FragmentArticleBinding
 import com.bangkit.factha.view.ViewModelFactory
 import com.bangkit.factha.view.activity.MainViewModel
 import com.bangkit.factha.view.adapter.HomeAdapter
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
 
 class ArticleFragment : Fragment() {
     private var _binding: FragmentArticleBinding? = null
@@ -61,23 +55,18 @@ class ArticleFragment : Fragment() {
 
             setupRecyclerView()
             observeNews()
-            observeSearchNews()
-            searchNews()
-
         }
     }
 
     private fun setupRecyclerView() {
         val userPreferences = UserPreferences.getInstance(requireContext().dataStore)
 
-        CoroutineScope(Dispatchers.IO).launch {
+        lifecycleScope.launch {
             userId = userPreferences.userId.first()
             userId?.let {
-                withContext(Dispatchers.Main) {
-                    binding.rvArticle.layoutManager = LinearLayoutManager(requireContext())
-                    homeAdapter = HomeAdapter(emptyList(), it, repository, bookmarkViewModel, viewLifecycleOwner)
-                    binding.rvArticle.adapter = homeAdapter
-                }
+                binding.rvArticle.layoutManager = LinearLayoutManager(requireContext())
+                homeAdapter = HomeAdapter(emptyList(), it, repository, bookmarkViewModel, viewLifecycleOwner)
+                binding.rvArticle.adapter = homeAdapter
             }
         }
     }
@@ -149,5 +138,4 @@ class ArticleFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-
 }

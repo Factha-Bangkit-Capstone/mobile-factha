@@ -1,41 +1,24 @@
 package com.bangkit.factha.data.remote
 
-import android.content.Context
 import android.util.Log
-import android.view.View
-import android.widget.Toast
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.bangkit.factha.data.helper.Result
-import com.bangkit.factha.data.network.ApiConfig
-import com.bangkit.factha.data.network.ApiServiceAuth
 import com.bangkit.factha.data.network.ApiServiceMain
-import com.bangkit.factha.data.preference.SavedNews
 import com.bangkit.factha.data.preference.SettingProfile
 import com.bangkit.factha.data.preference.UserDetails
 import com.bangkit.factha.data.preference.UserPreferences
-import com.bangkit.factha.data.preference.dataStore
 import com.bangkit.factha.data.response.AddNewsRequest
 import com.bangkit.factha.data.response.EditProfileResponse
 import com.bangkit.factha.data.response.NewsDataItem
 import com.bangkit.factha.data.response.NewsResponse
 import com.bangkit.factha.data.response.ProfileResponse
-import com.bangkit.factha.data.response.RegisterResponse
 import com.bangkit.factha.data.response.SaveNewsRequest
-import com.bangkit.factha.data.response.SavedDataItem
 import com.bangkit.factha.data.response.SavedNewsResponse
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class MainRepository(
     private val apiServiceMain: ApiServiceMain,
@@ -322,7 +305,7 @@ class MainRepository(
         return try {
             val token = userPreferences.token.first() ?: ""
             val userId = userPreferences.userId.first() ?: ""
-            Log.d("useridsrepo", "$userId")
+            Log.d("useridsrepo", userId)
             val response = apiServiceMain.getSavedNews("Bearer $token", userId)
 
             if (response.isSuccessful) {
@@ -333,7 +316,7 @@ class MainRepository(
                         val id = it.id ?: ""
                         val newsId = it.newsId ?: ""
                         userPreferences.saveSavedNews(id, newsId) // Save to data store
-                        Log.d("saved bro saved", "$newsId")
+                        Log.d("saved bro saved", newsId)
                     }
                     Result.Success(savedNewsResponse)
                 } else {
@@ -345,11 +328,6 @@ class MainRepository(
         } catch (e: Exception) {
             Result.Error("Get saved news error: ${e.message}")
         }
-    }
-
-
-    suspend fun deleteSavedNews() {
-        userPreferences.clearSavedNews()
     }
 
     suspend fun searchNews(keyword: String): Result<NewsResponse> {
@@ -371,29 +349,6 @@ class MainRepository(
             Result.Error("Find News error: ${e.message}")
         }
     }
-
-/*    suspend fun searchUser(keyword: String) {
-        val token = userPreferences.token.first() ?: ""
-        val response = apiServiceMain.searchNews("Bearer $token", keyword)
-
-        response.enqueue(object : Callback<NewsResponse> {
-            override fun onResponse(
-                call: Call<NewsResponse>,
-                response: Response<NewsResponse>
-            ) {
-                if (response.isSuccessful) {
-                    _listNews.value = response.body()?.newsData as List<NewsDataItem>
-                } else {
-                    Log.e("Fail", "onFailure: ${response.message()}")
-                }
-            }
-            override fun onFailure(call: Call<NewsResponse>, t: Throwable) {
-                Log.e("APIRequest", "onFailure: ${t.message}")
-
-                t.printStackTrace()
-            }
-        })
-    }*/
 
     companion object {
         @Volatile

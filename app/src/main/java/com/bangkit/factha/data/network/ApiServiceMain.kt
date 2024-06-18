@@ -1,15 +1,11 @@
 package com.bangkit.factha.data.network
 
 import com.bangkit.factha.data.response.AddNewsRequest
-import com.bangkit.factha.data.response.DeleteSavedNewsResponse
 import com.bangkit.factha.data.response.EditProfileResponse
 import com.bangkit.factha.data.response.NewsResponse
 import com.bangkit.factha.data.response.ProfileResponse
-import com.bangkit.factha.data.response.RegisterResponse
 import com.bangkit.factha.data.response.SaveNewsRequest
-import com.bangkit.factha.data.response.SavedDataItem
 import com.bangkit.factha.data.response.SavedNewsResponse
-import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -17,7 +13,6 @@ import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.Header
-import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
