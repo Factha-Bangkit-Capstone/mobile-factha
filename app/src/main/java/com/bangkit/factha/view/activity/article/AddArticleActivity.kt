@@ -14,7 +14,6 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.ImageView
-import android.widget.Spinner
 import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContract
@@ -29,14 +28,10 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bangkit.factha.R
 import com.bangkit.factha.data.helper.Result
-import com.bangkit.factha.data.network.ApiConfig
 import com.bangkit.factha.data.preference.UserPreferences
 import com.bangkit.factha.data.preference.dataStore
 import com.bangkit.factha.databinding.ActivityAddArticleBinding
-import com.bangkit.factha.view.activity.article.AddArticleViewModel
 import com.bangkit.factha.view.ViewModelFactory
-import com.bangkit.factha.view.activity.auth.LoginActivity
-import com.bangkit.factha.view.activity.auth.RegisterViewModel
 import com.yalantis.ucrop.UCrop
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
@@ -93,7 +88,6 @@ class AddArticleActivity : AppCompatActivity() {
         if (uri != null) {
             currentImageUri = uri
             showImage()
-        } else {
         }
     }
 
@@ -103,7 +97,6 @@ class AddArticleActivity : AppCompatActivity() {
         if (uri != null) {
             currentImageUriOcr = uri
             showImageOcr()
-        } else {
         }
     }
 

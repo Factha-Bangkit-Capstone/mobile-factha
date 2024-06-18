@@ -5,14 +5,12 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.WindowInsets
 import android.view.WindowManager
 import android.widget.Button
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.bangkit.factha.R
-import com.bangkit.factha.databinding.ActivitySplashScreenBinding
 import com.bangkit.factha.view.activity.auth.LoginActivity
 
 @SuppressLint("CustomSplashScreen")

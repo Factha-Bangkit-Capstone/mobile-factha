@@ -6,7 +6,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
 import com.bangkit.factha.R
@@ -16,8 +15,6 @@ import com.bangkit.factha.databinding.CardSelectedForYouBinding
 import com.bangkit.factha.view.activity.article.DetailArticleActivity
 import com.bumptech.glide.Glide
 import com.bangkit.factha.data.helper.Result
-import com.bangkit.factha.view.ViewModelFactory
-import com.bangkit.factha.view.activity.MainViewModel
 import com.bangkit.factha.view.fragment.main.BookmarkViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

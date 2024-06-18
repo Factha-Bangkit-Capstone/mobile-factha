@@ -21,16 +21,12 @@ import com.bangkit.factha.data.preference.UserPreferences
 import com.bangkit.factha.data.preference.dataStore
 import com.bangkit.factha.data.remote.MainRepository
 import com.bangkit.factha.view.activity.article.AddArticleActivity
-import com.bangkit.factha.view.activity.settings.AboutActivity
 import com.bangkit.factha.view.activity.settings.ProfileActivity
 import com.bangkit.factha.view.adapter.HomeAdapter
 import com.bumptech.glide.Glide
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
+import androidx.lifecycle.lifecycleScope
 
 class HomeFragment : Fragment() {
 
@@ -61,42 +57,46 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val userPreferences = UserPreferences.getInstance(requireContext().dataStore)
-        val token = runBlocking { userPreferences.token.first() }
 
-        if (token != null) {
-            val apiService = ApiConfig.getMainService(token)
-            repository = MainRepository.getInstance(apiService, userPreferences)
+        lifecycleScope.launch {
+            val token = userPreferences.token.first()
 
-            val transition = AnimationUtils.loadAnimation(requireContext(), R.anim.transition_fragment_home)
+            if (token != null) {
+                val apiService = ApiConfig.getMainService(token)
+                repository = MainRepository.getInstance(apiService, userPreferences)
 
-            binding.imageView4.apply {
-                visibility = View.VISIBLE
-                startAnimation(transition)
             }
-            binding.textView7.apply {
-                visibility = View.VISIBLE
-                startAnimation(transition)
-            }
-            binding.textView8.apply {
-                visibility = View.VISIBLE
-                startAnimation(transition)
-            }
-            binding.btnAddArticle.apply {
-                visibility = View.VISIBLE
-                startAnimation(transition)
-            }
-            binding.view.apply {
-                visibility = View.VISIBLE
-                startAnimation(transition)
-            }
-            binding.textView9.apply {
-                visibility = View.VISIBLE
-                startAnimation(transition)
-                }
-
-            setupRecyclerView()
-            observeNews()
         }
+
+        val transition = AnimationUtils.loadAnimation(requireContext(), R.anim.transition_fragment_home)
+
+        binding.imageView4.apply {
+            visibility = View.VISIBLE
+            startAnimation(transition)
+        }
+        binding.textView7.apply {
+            visibility = View.VISIBLE
+            startAnimation(transition)
+        }
+        binding.textView8.apply {
+            visibility = View.VISIBLE
+            startAnimation(transition)
+        }
+        binding.btnAddArticle.apply {
+            visibility = View.VISIBLE
+            startAnimation(transition)
+        }
+        binding.view.apply {
+            visibility = View.VISIBLE
+            startAnimation(transition)
+        }
+        binding.textView9.apply {
+            visibility = View.VISIBLE
+            startAnimation(transition)
+        }
+
+        setupRecyclerView()
+        observeNews()
 
         viewModelSetting.getSettingProfile().observe(viewLifecycleOwner) { settingProfile ->
             settingProfile?.imageBase64?.let {
@@ -126,15 +126,13 @@ class HomeFragment : Fragment() {
     private fun setupRecyclerView() {
         val userPreferences = UserPreferences.getInstance(requireContext().dataStore)
 
-        CoroutineScope(Dispatchers.IO).launch {
+        lifecycleScope.launch {
             userId = userPreferences.userId.first()
             userId?.let {
-                withContext(Dispatchers.Main) {
-                    if (isAdded) {
-                        binding.rvSelectedForYou.layoutManager = LinearLayoutManager(requireContext())
-                        homeAdapter = HomeAdapter(emptyList(), it, repository,bookmarkViewModel ,viewLifecycleOwner)
-                        binding.rvSelectedForYou.adapter = homeAdapter
-                    }
+                if (isAdded) {
+                    binding.rvSelectedForYou.layoutManager = LinearLayoutManager(requireContext())
+                    homeAdapter = HomeAdapter(emptyList(), it, repository, bookmarkViewModel, viewLifecycleOwner)
+                    binding.rvSelectedForYou.adapter = homeAdapter
                 }
             }
         }
@@ -166,5 +164,10 @@ class HomeFragment : Fragment() {
     private fun addNews() {
         val intent = Intent(requireContext(), AddArticleActivity::class.java)
         startActivity(intent)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

@@ -1,6 +1,5 @@
 package com.bangkit.factha.view.activity
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,11 +7,9 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.bangkit.factha.data.remote.MainRepository
 import com.bangkit.factha.data.helper.Result
-import com.bangkit.factha.data.preference.UserDetails
 import com.bangkit.factha.data.response.NewsDataItem
 import com.bangkit.factha.data.response.NewsResponse
 import com.bangkit.factha.data.response.ProfileResponse
-import com.bangkit.factha.view.adapter.HomeAdapter
 import kotlinx.coroutines.launch
 
 class MainViewModel(private val repository: MainRepository) : ViewModel() {

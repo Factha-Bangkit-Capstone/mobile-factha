@@ -6,7 +6,6 @@ import com.bangkit.factha.data.preference.UserPreferences
 import com.bangkit.factha.data.response.LoginResponse
 import com.bangkit.factha.data.response.RegisterResponse
 import com.bangkit.factha.data.helper.Result
-import kotlinx.coroutines.flow.Flow
 
 class AuthRepository(
     private val apiService: ApiServiceAuth,
