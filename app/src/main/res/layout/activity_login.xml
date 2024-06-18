@@ -56,7 +56,7 @@
                 android:fontFamily="@font/montserrat_medium"
                 android:text="@string/email_tv"
                 android:textColor="@color/black"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView" />
@@ -72,7 +72,7 @@
                 android:paddingVertical="6dp"
                 android:textColorHint="@color/md_theme_outline"
                 android:textColor="?attr/colorPrimary"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView4" />
@@ -85,7 +85,7 @@
                 android:fontFamily="@font/montserrat_regular"
                 android:text="@string/invalid_email"
                 android:textColor="@color/md_theme_error"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 android:visibility="gone"
                 app:layout_constraintStart_toStartOf="@+id/email_et_login"
                 app:layout_constraintTop_toBottomOf="@id/email_et_login"/>
@@ -98,7 +98,7 @@
                 android:fontFamily="@font/montserrat_medium"
                 android:text="@string/password_tv"
                 android:textColor="@color/black"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/email_alert" />
@@ -114,7 +114,7 @@
                 android:paddingVertical="6dp"
                 android:textColorHint="@color/md_theme_outline"
                 android:textColor="?attr/colorPrimary"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 android:drawableEnd="@drawable/ic_eye_close"
                 android:inputType="textPassword"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -154,7 +154,7 @@
                 android:fontFamily="@font/montserrat_medium"
                 android:text="@string/don_t_have_account"
                 android:textColor="@color/md_theme_outline"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/btn_login" />
 
@@ -168,7 +168,7 @@
                 android:fontFamily="@font/montserrat_semibold"
                 android:text="@string/create_now"
                 android:textColor="@color/black"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@+id/textView3"
                 app:layout_constraintStart_toEndOf="@+id/textView3" />
 

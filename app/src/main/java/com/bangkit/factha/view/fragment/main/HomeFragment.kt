@@ -104,8 +104,6 @@ class HomeFragment : Fragment() {
                 Glide.with(requireContext())
                     .asBitmap()
                     .load(imageBytes)
-                    .placeholder(R.drawable.avatar)
-                    .error(R.drawable.avatar)
                     .into(binding.imageView3)
             }
         }
@@ -151,7 +149,7 @@ class HomeFragment : Fragment() {
                 }
                 is Result.Success -> {
                     binding.loadingMenuSelectedForYou.visibility = View.GONE
-                    val newsData = result.data.newsData ?: emptyList()
+                    val newsData = result.data.newsData?.take(3) ?: emptyList()
                     userId?.let {
                         homeAdapter = HomeAdapter(newsData, it, repository, bookmarkViewModel ,viewLifecycleOwner)
                         binding.rvSelectedForYou.adapter = homeAdapter
