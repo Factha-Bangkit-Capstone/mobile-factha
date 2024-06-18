@@ -65,7 +65,6 @@ class MainActivity : AppCompatActivity() {
                 viewModel.getProfile()
             }
         }
-
     }
 
     private fun replaceFragment(fragment: Fragment) {

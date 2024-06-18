@@ -245,9 +245,11 @@ class AddArticleActivity : AppCompatActivity() {
         addArticleViewModel.postNewsResult.observe(this, Observer { result ->
             when (result) {
                 is Result.Loading -> {
+                    binding.progressBar.visibility = View.VISIBLE
                     showToast(getString(R.string.sedang_memposting_dan_memvalidasi_berita))
                 }
                 is Result.Success -> {
+                    binding.progressBar.visibility = View.GONE
                     showToast(getString(R.string.berita_berhasil_diproses))
                     finish()
                 }
