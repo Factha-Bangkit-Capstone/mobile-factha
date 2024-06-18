@@ -93,7 +93,6 @@ class AddArticleActivity : AppCompatActivity() {
             currentImageUri = uri
             showImage()
         } else {
-            Log.d("PhotoPicker", "No media selected")
         }
     }
 
@@ -104,7 +103,6 @@ class AddArticleActivity : AppCompatActivity() {
             currentImageUriOcr = uri
             showImageOcr()
         } else {
-            Log.d("PhotoPicker", "No media selected")
         }
     }
 
@@ -181,12 +179,12 @@ class AddArticleActivity : AppCompatActivity() {
         dialogEditText.setText(binding.edArticleForm.text.toString())
 
         val dialog = AlertDialog.Builder(this)
-            .setTitle("Masukkan berita Anda disini")
+            .setTitle(getString(R.string.masukkan_berita_anda_disini))
             .setView(dialogView)
-            .setPositiveButton("Ok") { _, _ ->
+            .setPositiveButton(getString(R.string.oke)) { _, _ ->
                 binding.edArticleForm.setText(dialogEditText.text.toString())
             }
-            .setNegativeButton("Kembali", null)
+            .setNegativeButton(getString(R.string.kembali), null)
             .create()
 
         dialog.show()
@@ -203,7 +201,6 @@ class AddArticleActivity : AppCompatActivity() {
     private fun showImage() {
         currentImageUri?.let { uri ->
             val uriOutput = File(filesDir, "croppedImage.jpg").toUri()
-            Log.i("ini yang show image", uriOutput.toString())
             val listUri = listOf(uri, uriOutput)
             cropImage.launch(listUri)
         }
@@ -236,7 +233,7 @@ class AddArticleActivity : AppCompatActivity() {
         val body = binding.edArticleForm.text.toString()
 
         if (title.isEmpty() || body.isEmpty() || currentImageUri == null) {
-            showToast("Please fill in all fields and select an image.")
+            showToast(getString(R.string.pastikan_semua_data_sudah_terisi))
             return
         }
 
@@ -253,14 +250,14 @@ class AddArticleActivity : AppCompatActivity() {
         addArticleViewModel.postNewsResult.observe(this, Observer { result ->
             when (result) {
                 is Result.Loading -> {
-                    showToast("Posting news, please wait...")
+                    showToast(getString(R.string.sedang_memposting_dan_memvalidasi_berita))
                 }
                 is Result.Success -> {
-                    showToast("News posted successfully!")
+                    showToast(getString(R.string.berita_berhasil_diproses))
                     finish()
                 }
                 is Result.Error -> {
-                    showToast("Error posting news: ${result.error}")
+                    showToast(" ${result.error}")
                 }
             }
         })
@@ -271,14 +268,16 @@ class AddArticleActivity : AppCompatActivity() {
             when (result) {
                 is Result.Loading -> {
                     binding.progressBar.visibility = View.VISIBLE
+                    binding.progressInformation.visibility = View.VISIBLE
                 }
                 is Result.Success -> {
                     binding.progressBar.visibility = View.GONE
+                    binding.progressInformation.visibility = View.GONE
                     AlertDialog.Builder(this).apply {
-                        setTitle("Success!")
-                        setMessage("Success get text from the image!")
-                        setPositiveButton("Oke", null)
-                        val recognizedText = result.data.recognizedText ?: "No text recognized"
+                        setTitle(getString(R.string.berhasil))
+                        setMessage(getString(R.string.berhasil_mengambil_text_dari_gambar))
+                        setPositiveButton(getString(R.string.oke), null)
+                        val recognizedText = result.data.recognizedText ?: getString(R.string.tidak_dapat_mengambil_text)
                         binding.edArticleForm.setText(recognizedText.lowercase())
                         create()
                         show()
@@ -286,10 +285,11 @@ class AddArticleActivity : AppCompatActivity() {
                 }
                 is Result.Error -> {
                     binding.progressBar.visibility = View.GONE
+                    binding.progressInformation.visibility = View.GONE
                     AlertDialog.Builder(this).apply {
-                        setTitle("Fail!")
-                        setMessage("Can't OCR!")
-                        setPositiveButton("OK", null)
+                        setTitle(getString(R.string.gagal))
+                        setMessage(getString(R.string.gagal_saat_mengambil_text))
+                        setPositiveButton(getString(R.string.oke), null)
                         create()
                         show()
                     }
