@@ -84,31 +84,33 @@ class HomeAdapter(
                     }
                 }
 
+                fun toggleLoadingProgress(isLoading: Boolean) {
+                    binding.loadingMenuSaved.visibility = if (isLoading) View.VISIBLE else View.GONE
+                }
+
                 binding.btnSaveArticle.setOnClickListener {
                     news?.newsId.let { savedNewsId ->
                         CoroutineScope(Dispatchers.Main).launch {
                             val toggleResult = savedNewsId?.let { it1 ->
-                                repository.toggleBookmark(
-                                    it1
-                                )
+                                repository.toggleBookmark(it1)
                             }
 
                             when (toggleResult) {
                                 is Result.Success -> {
-                                    binding.loadingMenuSaved.visibility = View.GONE
+                                    toggleLoadingProgress(false)
                                     val isBookmarked = toggleResult.data
                                     updateBookmarkIcon(isBookmarked)
                                 }
                                 is Result.Error -> {
+                                    toggleLoadingProgress(false)
                                     updateBookmarkIcon(true)
                                     Log.e("MainRepository", "Failed to toggle bookmark: ${toggleResult.error}")
-                                }
-                                Result.Loading -> {
-                                    binding.loadingMenuSaved.visibility = View.VISIBLE
                                 }
                                 null -> {
                                     Log.e("MainRepository", "Unexpected null result from toggleBookmark")
                                 }
+
+                                Result.Loading -> toggleLoadingProgress(true)
                             }
                         }
                     }
@@ -122,8 +124,8 @@ class HomeAdapter(
         return NewsViewHolder(binding)
     }
 
-    override fun getItemCount(): Int{
-        return minOf(news.size)
+    override fun getItemCount(): Int {
+        return news.size
     }
 
     override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
