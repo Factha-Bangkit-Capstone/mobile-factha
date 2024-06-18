@@ -262,7 +262,7 @@ class MainRepository(
     private suspend fun removeBookmark(newsId: String): Result<Boolean> {
         return try {
             val token = userPreferences.token.firstOrNull() ?: ""
-            if (token.isNullOrEmpty()) {
+            if (token.isEmpty()) {
                 return Result.Error("Token is null or empty")
             }
 
@@ -275,7 +275,7 @@ class MainRepository(
 
             val savedNewsList = savedNewsResponse.body()?.data ?: emptyList()
             val savedItem = savedNewsList.find { it?.newsId == newsId }
-            if (savedItem == null || savedItem.id == null) {
+            if (savedItem?.id == null) {
                 Log.e("MainRepository", "Saved news item not found for newsId: $newsId")
                 return Result.Error("Saved news item not found for newsId: $newsId")
             }

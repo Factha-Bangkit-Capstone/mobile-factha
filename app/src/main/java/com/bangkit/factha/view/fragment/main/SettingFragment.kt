@@ -74,8 +74,6 @@ class SettingFragment : Fragment() {
                 Glide.with(requireContext())
                     .asBitmap()
                     .load(imageBytes)
-                    .placeholder(R.drawable.avatar)
-                    .error(R.drawable.avatar) // Image to display if loading fails
                     .into(binding.imgProfile)
             }
         }

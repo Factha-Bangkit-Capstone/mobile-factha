@@ -23,8 +23,8 @@ class MainViewModel(private val repository: MainRepository) : ViewModel() {
     private val _news = MutableLiveData<Result<NewsResponse>>()
     val news: LiveData<Result<NewsResponse>> get() = _news
 
-    private val _searchedNews = MutableLiveData<Result<ProfileResponse>>()
-    val searchedNews: LiveData<Result<ProfileResponse>> = _searchedNews
+    private val _searchedNews = MutableLiveData<Result<NewsResponse>>()
+    val searchedNews: LiveData<Result<NewsResponse>> = _searchedNews
 
     private val _listNews = MutableLiveData<List<NewsDataItem>>()
     val listNews : LiveData<List<NewsDataItem>> = _listNews
@@ -34,10 +34,6 @@ class MainViewModel(private val repository: MainRepository) : ViewModel() {
         viewModelScope.launch {
             _profileData.value = repository.getProfile()
         }
-    }
-
-    fun getUserDetails(): LiveData<UserDetails?> {
-        return repository.getUserDetails().asLiveData()
     }
 
     fun getNews() {
@@ -50,7 +46,7 @@ class MainViewModel(private val repository: MainRepository) : ViewModel() {
     fun searchNews(keyword: String) {
         viewModelScope.launch {
             val result = repository.searchNews(keyword)
-            _listNews.postValue(result as List<NewsDataItem>)
+            _searchedNews.postValue(result)
         }
     }
 

@@ -28,7 +28,7 @@ class HomeAdapter(
     private val userId: String,
     private val repository: MainRepository,
     private val bookmarkViewModel: BookmarkViewModel,
-    private val lifecycleOwner: LifecycleOwner,
+    private val lifecycleOwner: LifecycleOwner
 ) : RecyclerView.Adapter<HomeAdapter.NewsViewHolder>() {
 
     var onItemClick: ((String) -> Unit)? = null
@@ -122,7 +122,9 @@ class HomeAdapter(
         return NewsViewHolder(binding)
     }
 
-    override fun getItemCount(): Int = news.size
+    override fun getItemCount(): Int{
+        return minOf(news.size)
+    }
 
     override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
         holder.bind(news[position])

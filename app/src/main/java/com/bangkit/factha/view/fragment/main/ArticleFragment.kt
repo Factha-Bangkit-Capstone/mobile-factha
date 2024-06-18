@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -43,7 +45,7 @@ class ArticleFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentArticleBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -59,9 +61,9 @@ class ArticleFragment : Fragment() {
 
             setupRecyclerView()
             observeNews()
-/*
+            observeSearchNews()
             searchNews()
-*/
+
         }
     }
 
@@ -95,55 +97,57 @@ class ArticleFragment : Fragment() {
                     }
                 }
                 is Result.Error -> {
-                    Log.e("TAG", "Observe news failed")
+                    binding.loadingMenuArticle.visibility = View.GONE
                 }
             }
         }
         viewModel.getNews()
     }
 
-    /*private fun searchNews() {
-        with(binding) {
-            searchView.setupWithSearchBar(searchBar)
-            searchView.editText.setOnEditorActionListener { textView, actionId, event ->
-                searchBar.setText(searchView.text)
-                searchView.hide()
-                false
-            }
-            searchView.editText.addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-
-                override fun afterTextChanged(s: Editable?) {
-                    val keyword = s.toString().trim()
-                    showLoading(true)
-                    viewModel.searchNews(keyword)
-                    showLoading(false)
+    private fun observeSearchNews() {
+        viewModel.searchedNews.observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is Result.Loading -> {
+                    binding.loadingMenuArticle.visibility = View.VISIBLE
                 }
-            })
-            searchView.setText(searchView.text)
+                is Result.Success -> {
+                    binding.loadingMenuArticle.visibility = View.GONE
+                    val newsData = result.data.newsData ?: emptyList()
+                    userId?.let {
+                        homeAdapter = HomeAdapter(newsData, it, repository, bookmarkViewModel, viewLifecycleOwner)
+                        binding.rvArticle.adapter = homeAdapter
+                    }
+                }
+                is Result.Error -> {
+                    binding.loadingMenuArticle.visibility = View.GONE
+                }
+            }
         }
-    }*/
+    }
+
+    private fun searchNews() {
+        with(binding) {
+            searchIcon.setOnClickListener {
+                val keyword = searchEditText.text.toString().trim()
+                viewModel.searchNews(keyword)
+            }
+
+            searchEditText.setOnEditorActionListener { _, actionId, event ->
+                if (!(actionId != EditorInfo.IME_ACTION_SEARCH && !(event?.action == KeyEvent.ACTION_DOWN && event.keyCode == KeyEvent.KEYCODE_ENTER))) {
+                    val keyword = searchEditText.text.toString().trim()
+                    viewModel.searchNews(keyword)
+                    true
+                } else {
+                    false
+                }
+            }
+
+        }
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-
-    private fun showLoading(state: Boolean) { if (state) binding.loadingMenuArticle.visibility = View.VISIBLE else binding.loadingMenuArticle.visibility = View.GONE }
-
-/*    private fun setProfileData(consumerProfiles: List<NewsDataItem>) { userId?.let {
-        val adapter = HomeAdapter(
-            consumerProfiles,
-            it,
-            repository,
-            bookmarkViewModel,
-            viewLifecycleOwner
-        )
-        adapter.submitList(consumerProfiles)
-        binding.rvArticle.adapter = adapter
-    }
-    }*/
 
 }

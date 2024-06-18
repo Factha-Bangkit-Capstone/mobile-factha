@@ -55,7 +55,7 @@
                 android:fontFamily="@font/montserrat_medium"
                 android:text="@string/name_tv"
                 android:textColor="@color/black"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 android:layout_marginTop="50dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -72,7 +72,7 @@
                 android:paddingVertical="6dp"
                 android:textColorHint="@color/md_theme_outline"
                 android:textColor="?attr/colorPrimary"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView6" />
@@ -85,7 +85,7 @@
                 android:fontFamily="@font/montserrat_medium"
                 android:text="@string/email_tv"
                 android:textColor="@color/black"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/name_et_register" />
@@ -101,7 +101,7 @@
                 android:paddingVertical="6dp"
                 android:textColorHint="@color/md_theme_outline"
                 android:textColor="?attr/colorPrimary"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView4" />
@@ -114,7 +114,7 @@
                 android:fontFamily="@font/montserrat_regular"
                 android:text="@string/invalid_email"
                 android:textColor="@color/md_theme_error"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 android:visibility="gone"
                 app:layout_constraintStart_toStartOf="@id/email_et_register"
                 app:layout_constraintTop_toBottomOf="@id/email_et_register"/>
@@ -127,7 +127,7 @@
                 android:fontFamily="@font/montserrat_medium"
                 android:text="@string/password_tv"
                 android:textColor="@color/black"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/email_alert" />
@@ -143,7 +143,7 @@
                 android:paddingVertical="6dp"
                 android:textColorHint="@color/md_theme_outline"
                 android:textColor="?attr/colorPrimary"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 android:drawableEnd="@drawable/ic_eye_close"
                 android:inputType="textPassword"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -158,7 +158,7 @@
                 android:fontFamily="@font/montserrat_regular"
                 android:text="@string/password_must_be_at_least_8_characters_long"
                 android:textColor="@color/md_theme_error"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 android:visibility="gone"
                 app:layout_constraintStart_toStartOf="@+id/password_et_register"
                 app:layout_constraintTop_toBottomOf="@id/password_et_register" />
@@ -183,7 +183,7 @@
                 android:fontFamily="@font/montserrat_medium"
                 android:text="@string/already_have_account"
                 android:textColor="@color/md_theme_outline"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/btn_register" />
 
@@ -197,7 +197,7 @@
                 android:fontFamily="@font/montserrat_semibold"
                 android:text="@string/log_in"
                 android:textColor="@color/black"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@+id/textView3"
                 app:layout_constraintStart_toEndOf="@+id/textView3" />
 

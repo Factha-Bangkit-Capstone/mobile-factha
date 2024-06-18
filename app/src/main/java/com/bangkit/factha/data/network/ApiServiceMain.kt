@@ -41,10 +41,10 @@ interface ApiServiceMain {
         @Path("newsId") newsId: String
     ): Response<NewsResponse>
 
-    @GET("news/search?keyword={keyword}")
+    @GET("news/search")
     suspend fun searchNews(
         @Header("X-Auth-Token") token: String,
-        @Path("keyword") keyword: String
+        @Query("keyword") keyword: String
     ): Response<NewsResponse>
 
     @POST("news")

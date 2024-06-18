@@ -172,8 +172,6 @@ class ProfileActivity : AppCompatActivity() {
                     Glide.with(this@ProfileActivity)
                         .asBitmap()
                         .load(imageBytes)
-                        .placeholder(R.drawable.avatar)
-                        .error(R.drawable.avatar)
                         .into(binding.imgProfile)
                     val premiumStatus = if (userDetails.premium == 1) "Premium" else "Non-Premium"
                     binding.nameInputLayout.editText?.text = Editable.Factory.getInstance().newEditable(userDetails.name)
