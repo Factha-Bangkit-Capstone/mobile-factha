@@ -99,4 +99,11 @@
         <item name="lalulintas">Lalu Lintas</item>
         <item name="hiburan">Hiburan</item>
     </string-array>
+    <string name="piechart_hoaks">HOAKS</string>
+    <string name="piechart_fakta">HOAKS</string>
+    <string name="hasil_hoaks">HOAKS</string>
+    <string name="hasil_fakta">FAKTA</string>
+    <string name="hasil_prediksi">Hasil Prediksi:</string>
+    <string name="catatan_prediksi">*Persebaran skor terlalu imbang, perlu kajian lanjut</string>
+    <string name="analisis_berita">Analisis Berita</string>
 </resources>

@@ -59,7 +59,9 @@ class ArticleFragment : Fragment() {
 
             setupRecyclerView()
             observeNews()
+/*
             searchNews()
+*/
         }
     }
 
@@ -100,7 +102,7 @@ class ArticleFragment : Fragment() {
         viewModel.getNews()
     }
 
-    private fun searchNews() {
+    /*private fun searchNews() {
         with(binding) {
             searchView.setupWithSearchBar(searchBar)
             searchView.editText.setOnEditorActionListener { textView, actionId, event ->
@@ -122,7 +124,7 @@ class ArticleFragment : Fragment() {
             })
             searchView.setText(searchView.text)
         }
-    }
+    }*/
 
     override fun onDestroyView() {
         super.onDestroyView()
