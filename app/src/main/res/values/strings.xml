@@ -86,6 +86,15 @@
     <string name="hoaks">HOAKS</string>
     <string name="old_password">old password</string>
     <string name="ocr_input">Try OCR Input</string>
+    <string name="pengembangan">Pengembangan</string>
+    <string name="fitur_masih_dalam_masa_pengembangan">Fitur masih dalam masa pengembangan!</string>
+    <string name="tutup">Tutup</string>
+    <string name="konfirmasi">Konfirmasi</string>
+    <string name="apakah_anda_yakin_keluar_akun">Apakah anda yakin keluar akun?</string>
+    <string name="keluar">Keluar</string>
+    <string name="batal">Batal</string>
+    <string name="pilih_bahasa">Pilih bahasa</string>
+    <string name="bahasa_yang_dipilih">Bahasa yang dipilih: %1$s</string>
     <string-array name="language_options">
         <item name="indonesia">Indonesia</item>
         <item name="english">English</item>

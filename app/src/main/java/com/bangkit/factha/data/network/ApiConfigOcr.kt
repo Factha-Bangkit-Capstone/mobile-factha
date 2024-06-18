@@ -1,5 +1,6 @@
 package com.bangkit.factha.data.network
 
+import com.bangkit.factha.BuildConfig
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -8,7 +9,7 @@ import java.util.concurrent.TimeUnit
 
 object ApiConfigOcr {
 
-    private const val BASE_URL = "https://ocrfactha-f6ajfzc6ba-et.a.run.app/"
+    private const val BASE_URL = BuildConfig.ocrUrl
 
     fun getOcrService(): ApiServiceOcr {
         val loggingInterceptor = HttpLoggingInterceptor()

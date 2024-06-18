@@ -10,7 +10,6 @@ import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
 
 interface ApiServiceOcr {
-
     @POST("process_image")
     suspend fun postOCR(
         @Body requestBody: OcrRequest
