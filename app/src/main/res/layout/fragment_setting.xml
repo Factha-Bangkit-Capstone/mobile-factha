@@ -32,13 +32,13 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    android:src="@drawable/avatar" />
+                    android:src="?attr/colorPrimary" />
 
                 <TextView
                     android:id="@+id/tv_username"
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
-                    android:layout_marginStart="6dp"
+                    android:layout_marginStart="14dp"
                     tools:text=""
                     android:fontFamily="@font/montserrat_bold"
                     android:textColor="@color/md_theme_onPrimary"
@@ -49,7 +49,7 @@
                     android:id="@+id/tv_email"
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
-                    android:layout_marginStart="6dp"
+                    android:layout_marginStart="14dp"
                     android:layout_marginBottom="35dp"
                     tools:text=""
                     android:fontFamily="@font/montserrat_regular"
