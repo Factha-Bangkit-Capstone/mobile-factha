@@ -3,6 +3,8 @@ package com.bangkit.factha.view.activity.article
 import android.os.Bundle
 import android.util.Base64
 import android.util.Log
+import android.view.View
+import android.view.animation.AnimationUtils
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -37,6 +39,21 @@ class DetailArticleActivity : AppCompatActivity() {
         viewModel.fetchNewsDetails(newsId)
         binding.btnBack.setOnClickListener { finish() }
 
+        val transition = AnimationUtils.loadAnimation(this, R.anim.transition_card_item_detail_news)
+
+        binding.clDetailHead.apply {
+            visibility = View.VISIBLE
+            startAnimation(transition)
+        }
+        binding.clDetailAnalytics.apply {
+            visibility = View.VISIBLE
+            startAnimation(transition)
+        }
+        binding.clDetailBody.apply {
+            visibility = View.VISIBLE
+            startAnimation(transition)
+        }
+
         setupObservers()
     }
 
@@ -51,8 +68,8 @@ class DetailArticleActivity : AppCompatActivity() {
             if (hoaxScoreModel != 0.0f && validScoreModel != 0.0f) {
                 val pieChart = binding.piechart
                 val entries = ArrayList<PieEntry>()
-                entries.add(PieEntry(hoaxScoreModel, "HOAKS"))
                 entries.add(PieEntry(validScoreModel, "FAKTA"))
+                entries.add(PieEntry(hoaxScoreModel, "HOAKS"))
 
                 val pieDataSet = PieDataSet(entries, "| KETERANGAN")
                 pieDataSet.colors = ColorTemplate.MATERIAL_COLORS.toList()

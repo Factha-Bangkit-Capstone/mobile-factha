@@ -84,6 +84,7 @@
                     android:elevation="4dp"
                     android:focusable="true"
                     android:padding="16dp"
+                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
@@ -133,6 +134,7 @@
                     android:elevation="4dp"
                     android:focusable="true"
                     android:padding="16dp"
+                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/card_language">
@@ -182,6 +184,7 @@
                     android:elevation="4dp"
                     android:focusable="true"
                     android:padding="16dp"
+                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/card_notification">
@@ -231,6 +234,7 @@
                     android:elevation="4dp"
                     android:focusable="true"
                     android:padding="16dp"
+                    android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

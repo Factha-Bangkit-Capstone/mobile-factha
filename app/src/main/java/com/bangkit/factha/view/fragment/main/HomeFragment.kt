@@ -1,6 +1,5 @@
 package com.bangkit.factha.view.fragment.main
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Base64
@@ -9,8 +8,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bangkit.factha.R
 import com.bangkit.factha.databinding.FragmentHomeBinding
@@ -68,6 +67,33 @@ class HomeFragment : Fragment() {
             val apiService = ApiConfig.getMainService(token)
             repository = MainRepository.getInstance(apiService, userPreferences)
 
+            val transition = AnimationUtils.loadAnimation(requireContext(), R.anim.transition_fragment_home)
+
+            binding.imageView4.apply {
+                visibility = View.VISIBLE
+                startAnimation(transition)
+            }
+            binding.textView7.apply {
+                visibility = View.VISIBLE
+                startAnimation(transition)
+            }
+            binding.textView8.apply {
+                visibility = View.VISIBLE
+                startAnimation(transition)
+            }
+            binding.btnAddArticle.apply {
+                visibility = View.VISIBLE
+                startAnimation(transition)
+            }
+            binding.view.apply {
+                visibility = View.VISIBLE
+                startAnimation(transition)
+            }
+            binding.textView9.apply {
+                visibility = View.VISIBLE
+                startAnimation(transition)
+                }
+
             setupRecyclerView()
             observeNews()
         }
@@ -83,7 +109,6 @@ class HomeFragment : Fragment() {
                     .into(binding.imageView3)
             }
         }
-
 
         binding.btnAddArticle.setOnClickListener { addNews() }
         binding.btnWrite.setOnClickListener { addNews() }
@@ -140,9 +165,8 @@ class HomeFragment : Fragment() {
         viewModel.getNews()
     }
 
-    private fun addNews(){
+    private fun addNews() {
         val intent = Intent(requireContext(), AddArticleActivity::class.java)
         startActivity(intent)
     }
-
 }

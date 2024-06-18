@@ -72,8 +72,10 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cl_detail_head"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
                     android:padding="8dp">
 
                     <ImageView
@@ -119,8 +121,10 @@
                 app:layout_constraintTop_toBottomOf="@id/cv_preview">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cl_detail_analytics"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
                     android:padding="8dp">
 
                     <com.github.mikephil.charting.charts.PieChart
@@ -164,7 +168,7 @@
                         android:layout_width="160dp"
                         android:layout_height="wrap_content"
                         android:text="@string/catatan_prediksi"
-                        android:visibility="visible"
+                        android:visibility="gone"
                         android:textSize="12sp"
                         android:textAlignment="textEnd"
                         android:layout_marginStart="198dp"
@@ -185,8 +189,10 @@
                 app:layout_constraintTop_toBottomOf="@id/cv_article_analytics">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cl_detail_body"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
                     android:padding="8dp">
 
                 <TextView
