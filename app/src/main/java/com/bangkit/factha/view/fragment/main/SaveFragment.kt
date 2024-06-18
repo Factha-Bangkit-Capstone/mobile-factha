@@ -89,7 +89,12 @@ class SaveFragment : Fragment() {
                 is Result.Success -> {
                     binding.loadingMenuSaved.visibility = View.GONE
                     val bookmarkedNewsList = result.data
-                    homeAdapter.updateData(bookmarkedNewsList)
+                    if (bookmarkedNewsList.isEmpty()) {
+                        binding.tvEmptySavedNewsList.visibility = View.VISIBLE
+                    } else {
+                        binding.tvEmptySavedNewsList.visibility = View.GONE
+                        homeAdapter.updateData(bookmarkedNewsList)
+                    }
                 }
                 is Result.Error -> {
                     Log.e("SaveFragment", "Failed to fetch bookmarked news: ${result.error}")

@@ -19,6 +19,7 @@
             android:exported="false" />
         <activity
             android:name=".view.activity.MainActivity"
+            android:configChanges="locale|orientation|screenSize"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

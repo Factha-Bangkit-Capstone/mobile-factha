@@ -1,7 +1,9 @@
 package com.bangkit.factha.view.fragment.main
 
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,8 +18,8 @@ import com.bangkit.factha.view.activity.splashscreen.SplashScreenActivity
 import com.bumptech.glide.Glide
 import android.util.Base64
 import android.view.animation.AnimationUtils
-import android.widget.Toast
 import com.bangkit.factha.view.activity.settings.ProfileActivity
+import java.util.Locale
 import kotlin.io.encoding.ExperimentalEncodingApi
 
 class SettingFragment : Fragment() {
@@ -80,16 +82,49 @@ class SettingFragment : Fragment() {
     }
 
     private fun selectLanguage() {
-        val builder = android.app.AlertDialog.Builder(requireContext())
         val languages = resources.getStringArray(R.array.language_options)
-        builder.setTitle(getString(R.string.pilih_bahasa))
-        builder.setItems(languages) { _, which ->
-            val selectedLanguage = languages[which]
+        val currentLanguage = Locale.getDefault().language
 
-            Toast.makeText(requireContext(),
-                getString(R.string.bahasa_yang_dipilih, selectedLanguage), Toast.LENGTH_SHORT).show()
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle(getString(R.string.pilih_bahasa))
+        builder.setSingleChoiceItems(languages, -1) { dialog, which ->
+            val selectedLanguage = when (which) {
+                0 -> "in"
+                1 -> "en"
+                else -> {
+                    "in"
+                }
+            }
+
+            saveLanguagePreference(selectedLanguage)
+
+            setLocale(selectedLanguage)
+            restartActivity()
+
+            dialog.dismiss()
         }
         builder.show()
+    }
+
+    private fun saveLanguagePreference(languageCode: String) {
+        val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(requireContext())
+        sharedPrefs.edit().putString("language", languageCode).apply()
+    }
+
+    private fun setLocale(languageCode: String) {
+        val locale = Locale(languageCode)
+        Locale.setDefault(locale)
+
+        val resources = resources
+        val configuration = Configuration(resources.configuration)
+        configuration.setLocale(locale)
+        resources.updateConfiguration(configuration, resources.displayMetrics)
+    }
+
+    private fun restartActivity() {
+        requireActivity().finish()
+        val intent = requireActivity().intent
+        startActivity(intent)
     }
 
     private fun selectNotification() {

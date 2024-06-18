@@ -33,7 +33,7 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private var homeAdapter: HomeAdapter? = null
-    private lateinit var repository: MainRepository
+    private var repository: MainRepository? = null
     private var userId: String? = null
     private val bookmarkViewModel by viewModels<BookmarkViewModel> {
         ViewModelFactory.getInstance(requireContext())
@@ -131,7 +131,7 @@ class HomeFragment : Fragment() {
             userId?.let {
                 if (isAdded) {
                     binding.rvSelectedForYou.layoutManager = LinearLayoutManager(requireContext())
-                    homeAdapter = HomeAdapter(emptyList(), it, repository, bookmarkViewModel, viewLifecycleOwner)
+                    homeAdapter = HomeAdapter(emptyList(), it, repository!!, bookmarkViewModel, viewLifecycleOwner)
                     binding.rvSelectedForYou.adapter = homeAdapter
                 }
             }
@@ -149,7 +149,7 @@ class HomeFragment : Fragment() {
                     binding.loadingMenuSelectedForYou.visibility = View.GONE
                     val newsData = result.data.newsData?.take(3) ?: emptyList()
                     userId?.let {
-                        homeAdapter = HomeAdapter(newsData, it, repository, bookmarkViewModel ,viewLifecycleOwner)
+                        homeAdapter = HomeAdapter(newsData, it, repository!!, bookmarkViewModel ,viewLifecycleOwner)
                         binding.rvSelectedForYou.adapter = homeAdapter
                     }
                 }

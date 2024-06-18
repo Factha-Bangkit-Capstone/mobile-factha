@@ -100,7 +100,14 @@ class MainRepository(
         return try {
             val token = userPreferences.token.first() ?: ""
             val userId = userPreferences.userId.first() ?: ""
-            val response = apiServiceMain.editProfile(userId,"Bearer $token", image, name, email, body, oldPassword, newPassword)
+
+            val finalImage = if (image.isNullOrEmpty()) {
+                userPreferences.userDetails.first()?.imageB64 ?: ""
+            } else {
+                image
+            }
+
+            val response = apiServiceMain.editProfile(userId,"Bearer $token", finalImage, name, email, body, oldPassword, newPassword)
             if (response.isSuccessful) {
                 val registerResponse = response.body()
                 if (registerResponse != null) {

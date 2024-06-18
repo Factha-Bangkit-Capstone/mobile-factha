@@ -55,6 +55,8 @@ class ArticleFragment : Fragment() {
 
             setupRecyclerView()
             observeNews()
+            searchNews()
+            observeSearchNews()
         }
     }
 

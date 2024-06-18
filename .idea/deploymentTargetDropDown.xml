@@ -3,31 +3,7 @@
   <component name="deploymentTargetDropDown">
     <value>
       <entry key="app">
-        <State>
-<<<<<<< Updated upstream
-          <runningDeviceTargetSelectedWithDropDown>
-            <Target>
-              <type value="RUNNING_DEVICE_TARGET" />
-=======
-          <targetSelectedWithDropDown>
-            <Target>
-              <type value="QUICK_BOOT_TARGET" />
->>>>>>> Stashed changes
-              <deviceKey>
-                <Key>
-                  <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="C:\Users\izam\.android\avd\Pixel_4_API_30.avd" />
-                </Key>
-              </deviceKey>
-            </Target>
-<<<<<<< Updated upstream
-          </runningDeviceTargetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2024-06-18T10:44:05.105766200Z" />
-=======
-          </targetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2024-06-18T09:08:59.427584800Z" />
->>>>>>> Stashed changes
-        </State>
+        <State />
       </entry>
     </value>
   </component>
