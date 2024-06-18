@@ -1,5 +1,6 @@
 package com.bangkit.factha.data.network
 
+import com.bangkit.factha.BuildConfig
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -8,8 +9,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object ApiConfig {
 
-    private const val BASE_URL = "https://factha-api-f6ajfzc6ba-et.a.run.app/"
-    fun getAuthService(s: String): ApiServiceAuth {
+    private const val BASE_URL = BuildConfig.mainUrl
+    fun getAuthService(): ApiServiceAuth {
         val loggingInterceptor = HttpLoggingInterceptor()
             .setLevel(HttpLoggingInterceptor.Level.BODY)
         val client: OkHttpClient = OkHttpClient.Builder()

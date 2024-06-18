@@ -15,6 +15,7 @@ import com.bangkit.factha.view.activity.settings.AboutActivity
 import com.bangkit.factha.view.activity.splashscreen.SplashScreenActivity
 import com.bumptech.glide.Glide
 import android.util.Base64
+import android.widget.Toast
 import com.bangkit.factha.view.activity.settings.ProfileActivity
 import kotlin.io.encoding.ExperimentalEncodingApi
 
@@ -38,9 +39,8 @@ class SettingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        binding.btnEditProfile.setOnClickListener{ editProfile() }
-//        binding.cardLanguage.setOnClickListener { selectLanguage() }
-//        binding.cardNotification.setOnClickListener {  }
+        binding.cardLanguage.setOnClickListener { selectLanguage() }
+        binding.cardNotification.setOnClickListener { selectNotification()  }
         binding.cardAbout.setOnClickListener { selectAbout() }
         binding.cardLogout.setOnClickListener { logout() }
         binding.btnEditProfile.setOnClickListener{ selectProfile() }
@@ -61,17 +61,28 @@ class SettingFragment : Fragment() {
         }
     }
 
-//    private fun selectLanguage() {
-//        val builder = Builder(requireContext())
-//        val languages = resources.getStringArray(R.array.language_options)
-//        builder.setTitle("Pick a language")
-//        builder.setItems(languages) { dialog, which ->
-//            val selectedLanguage = languages[which]
-//
-//            Toast.makeText(requireContext(), "Selected language: $selectedLanguage", Toast.LENGTH_SHORT).show()
-//        }
-//        builder.show()
-//    }
+    private fun selectLanguage() {
+        val builder = android.app.AlertDialog.Builder(requireContext())
+        val languages = resources.getStringArray(R.array.language_options)
+        builder.setTitle(getString(R.string.pilih_bahasa))
+        builder.setItems(languages) { _, which ->
+            val selectedLanguage = languages[which]
+
+            Toast.makeText(requireContext(),
+                getString(R.string.bahasa_yang_dipilih, selectedLanguage), Toast.LENGTH_SHORT).show()
+        }
+        builder.show()
+    }
+
+    private fun selectNotification() {
+        AlertDialog.Builder(requireContext()).apply {
+            setTitle(getString(R.string.pengembangan))
+            setMessage(getString(R.string.fitur_masih_dalam_masa_pengembangan))
+            setPositiveButton(getString(R.string.tutup), null)
+            create()
+            show()
+        }
+    }
 
     private fun selectAbout() {
         val intent = Intent(requireContext(), AboutActivity::class.java)
@@ -85,14 +96,14 @@ class SettingFragment : Fragment() {
 
     private fun logout() {
         AlertDialog.Builder(requireContext()).apply {
-            setTitle("Logout")
-            setMessage("Are you sure you want to logout?")
-            setPositiveButton("Yes") { _, _ ->
+            setTitle(getString(R.string.keluar))
+            setMessage(getString(R.string.apakah_anda_yakin_keluar_akun))
+            setPositiveButton(getString(R.string.konfirmasi)) { _, _ ->
                 viewModel.logout()
                 val intent = Intent(requireContext(), SplashScreenActivity::class.java)
                 startActivity(intent)
             }
-            setNegativeButton("Cancel") { dialog, _ ->
+            setNegativeButton(getString(R.string.batal)) { dialog, _ ->
                 dialog.dismiss()
             }
             create()

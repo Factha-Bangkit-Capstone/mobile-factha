@@ -3,6 +3,9 @@ plugins {
     alias(libs.plugins.jetbrainsKotlinAndroid)
 }
 
+val mainUrl: String by project
+val ocrUrl: String by project
+
 android {
     namespace = "com.bangkit.factha"
     compileSdk = 34
@@ -14,6 +17,9 @@ android {
         versionCode = 1
         versionName = "1.0"
         multiDexEnabled = true
+
+        buildConfigField("String", "mainUrl", "\"$mainUrl\"")
+        buildConfigField("String", "ocrUrl", "\"$ocrUrl\"")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -37,6 +43,7 @@ android {
 
     buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
 }
 

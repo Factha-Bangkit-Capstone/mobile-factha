@@ -65,12 +65,15 @@
             android:layout_height="wrap_content"
             tools:listitem="@layout/card_article_item"/>
 
-        <ProgressBar
-            android:id="@+id/loading_menu_article"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="50dp"/>
     </FrameLayout>
+
+    <ProgressBar
+        android:id="@+id/loading_menu_article"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

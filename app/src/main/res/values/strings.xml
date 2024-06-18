@@ -5,7 +5,7 @@
     <string name="title_menu_1">Apa Sih Factha Itu?</string>
     <string name="desc_menu_1">Factha merupakan aplikasi kanal berita yang menyediakan fitur filterisasi hoaks dan analisis berita</string>
     <string name="title_menu_2">Cek Validasi Berita Yang Kamu Baca</string>
-    <string name="desc_menu_2">Cari tahu tahu validasi berita yang kamu baca hanya dengan memasukkan artikel tersebut ke aplikasi kami!</string>
+    <string name="desc_menu_2">Cari tahu validasi berita yang kamu baca hanya dengan memasukkan artikel tersebut ke aplikasi kami!</string>
     <string name="title_menu_3">AI Analisis Berita</string>
     <string name="desc_menu_3">Berita yang kamu masukkan akan diperiksa oleh AI kami untuk kemudian kami berikan hasil analisisnya dalam bentuk \"FAKTA\" dan \"HOAKS\" lengkap beserta dengan analisis keyakinan AI kami</string>
     <string name="title_menu_4">List Berita Teranalisis</string>
@@ -86,6 +86,15 @@
     <string name="hoaks">HOAKS</string>
     <string name="old_password">old password</string>
     <string name="ocr_input">Try OCR Input</string>
+    <string name="pengembangan">Pengembangan</string>
+    <string name="fitur_masih_dalam_masa_pengembangan">Fitur masih dalam masa pengembangan!</string>
+    <string name="tutup">Tutup</string>
+    <string name="konfirmasi">Konfirmasi</string>
+    <string name="apakah_anda_yakin_keluar_akun">Apakah anda yakin keluar akun?</string>
+    <string name="keluar">Keluar</string>
+    <string name="batal">Batal</string>
+    <string name="pilih_bahasa">Pilih bahasa</string>
+    <string name="bahasa_yang_dipilih">Bahasa yang dipilih: %1$s</string>
     <string name="cari_berita">Cari Berita</string>
     <string name="mencari_berita">Mencari Berita</string>
     <string-array name="language_options">
@@ -106,4 +115,16 @@
     <string name="hasil_prediksi">Hasil Prediksi:</string>
     <string name="catatan_prediksi">*Persebaran skor terlalu imbang, perlu kajian lanjut</string>
     <string name="analisis_berita">Analisis Berita</string>
+    <string name="silahkan_tunggu_sistem_sedang_mengambil_text_dari_gambar">Sistem sedang mengambil text dari gambar</string>
+    <string name="berhasil">Berhasil</string>
+    <string name="berhasil_mengambil_text_dari_gambar">Berhasil mengambil text dari gambar</string>
+    <string name="tidak_dapat_mengambil_text">Tidak dapat mengambil text</string>
+    <string name="gagal">Gagal</string>
+    <string name="gagal_saat_mengambil_text">Gagal saat mengambil text</string>
+    <string name="pastikan_semua_data_sudah_terisi">Pastikan semua data sudah terisi!</string>
+    <string name="sedang_memposting_dan_memvalidasi_berita">Sedang Memposting dan Memvalidasi Berita</string>
+    <string name="berita_berhasil_diproses">Berita berhasil diproses</string>
+    <string name="masukkan_berita_anda_disini">Masukkan berita Anda disini</string>
+    <string name="oke">Oke</string>
+    <string name="kembali">Kembali</string>
 </resources>

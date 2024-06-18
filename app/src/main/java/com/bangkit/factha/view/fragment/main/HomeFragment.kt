@@ -3,6 +3,7 @@ package com.bangkit.factha.view.fragment.main
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Base64
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -22,7 +23,9 @@ import com.bangkit.factha.data.preference.dataStore
 import com.bangkit.factha.data.remote.MainRepository
 import com.bangkit.factha.view.activity.article.AddArticleActivity
 import com.bangkit.factha.view.activity.settings.AboutActivity
+import com.bangkit.factha.view.activity.settings.ProfileActivity
 import com.bangkit.factha.view.adapter.HomeAdapter
+import com.bumptech.glide.Glide
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
@@ -41,6 +44,9 @@ class HomeFragment : Fragment() {
         ViewModelFactory.getInstance(requireContext())
     }
     private val viewModel by viewModels<MainViewModel> {
+        ViewModelFactory.getInstance(requireContext())
+    }
+    private val viewModelSetting by viewModels<SettingViewModel> {
         ViewModelFactory.getInstance(requireContext())
     }
 
@@ -66,14 +72,32 @@ class HomeFragment : Fragment() {
             observeNews()
         }
 
+        viewModelSetting.getSettingProfile().observe(viewLifecycleOwner) { settingProfile ->
+            settingProfile?.imageBase64?.let {
+                val imageBytes = Base64.decode(settingProfile.imageBase64, Base64.DEFAULT)
+                Glide.with(requireContext())
+                    .asBitmap()
+                    .load(imageBytes)
+                    .placeholder(R.drawable.avatar)
+                    .error(R.drawable.avatar)
+                    .into(binding.imageView3)
+            }
+        }
+
+
         binding.btnAddArticle.setOnClickListener { addNews() }
         binding.btnWrite.setOnClickListener { addNews() }
         binding.btnWriteIcon.setOnClickListener { addNews() }
+        binding.imageView3.setOnClickListener{ selectProfile() }
 
         bookmarkViewModel.savedNewsList.observe(viewLifecycleOwner) { savedNewsIds ->
-            Log.d("savednewsobserved", "Saved news IDs: $savedNewsIds")
             homeAdapter?.updateBookmarkedNews(savedNewsIds)
         }
+    }
+
+    private fun selectProfile() {
+        val intent = Intent(requireContext(), ProfileActivity::class.java)
+        startActivity(intent)
     }
 
     private fun setupRecyclerView() {
