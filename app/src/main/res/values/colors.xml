@@ -145,4 +145,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="red">#FF5050</color>
     <color name="green">#42EB49</color>
+    <color name="orange_prediction">#F1C40F</color>
+    <color name="green_prediction">#2FCC71</color>
 </resources>
