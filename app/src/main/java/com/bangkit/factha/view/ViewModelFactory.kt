@@ -8,6 +8,7 @@ import com.bangkit.factha.data.helper.InjectionAuth
 import com.bangkit.factha.data.helper.InjectionMain
 import com.bangkit.factha.data.network.ApiConfigOcr
 import com.bangkit.factha.data.remote.OcrRepository
+import com.bangkit.factha.data.remote.MainRepository
 import com.bangkit.factha.view.activity.MainViewModel
 import com.bangkit.factha.view.activity.article.AddArticleViewModel
 import com.bangkit.factha.view.activity.article.DetailArticleViewModel
@@ -16,9 +17,13 @@ import com.bangkit.factha.view.activity.auth.LoginViewModel
 import com.bangkit.factha.view.activity.auth.RegisterViewModel
 import com.bangkit.factha.view.activity.settings.ProfileViewModel
 import com.bangkit.factha.view.fragment.main.SettingViewModel
-import com.bangkit.factha.viewmodels.BookmarkViewModel
+import com.bangkit.factha.view.fragment.main.BookmarkViewModel
 
-class ViewModelFactory private constructor(private val context: Context) : ViewModelProvider.Factory {
+class ViewModelFactory private constructor(
+    private val context: Context,
+    private val repository: MainRepository? = null,
+    private val bookmarkViewModel: BookmarkViewModel? = null,
+) : ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return when {

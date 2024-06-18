@@ -34,10 +34,12 @@ class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
-    private lateinit var homeAdapter: HomeAdapter
+    private var homeAdapter: HomeAdapter? = null
     private lateinit var repository: MainRepository
     private var userId: String? = null
-
+    private val bookmarkViewModel by viewModels<BookmarkViewModel> {
+        ViewModelFactory.getInstance(requireContext())
+    }
     private val viewModel by viewModels<MainViewModel> {
         ViewModelFactory.getInstance(requireContext())
     }
@@ -60,13 +62,18 @@ class HomeFragment : Fragment() {
             val apiService = ApiConfig.getMainService(token)
             repository = MainRepository.getInstance(apiService, userPreferences)
 
-            observeNews()
             setupRecyclerView()
+            observeNews()
         }
 
         binding.btnAddArticle.setOnClickListener { addNews() }
         binding.btnWrite.setOnClickListener { addNews() }
         binding.btnWriteIcon.setOnClickListener { addNews() }
+
+        bookmarkViewModel.savedNewsList.observe(viewLifecycleOwner) { savedNewsIds ->
+            Log.d("savednewsobserved", "Saved news IDs: $savedNewsIds")
+            homeAdapter?.updateBookmarkedNews(savedNewsIds)
+        }
     }
 
     private fun setupRecyclerView() {
@@ -76,13 +83,16 @@ class HomeFragment : Fragment() {
             userId = userPreferences.userId.first()
             userId?.let {
                 withContext(Dispatchers.Main) {
-                    binding.rvSelectedForYou.layoutManager = LinearLayoutManager(requireContext())
-                    homeAdapter = HomeAdapter(emptyList(), it, repository)
-                    binding.rvSelectedForYou.adapter = homeAdapter
+                    if (isAdded) {
+                        binding.rvSelectedForYou.layoutManager = LinearLayoutManager(requireContext())
+                        homeAdapter = HomeAdapter(emptyList(), it, repository,bookmarkViewModel ,viewLifecycleOwner)
+                        binding.rvSelectedForYou.adapter = homeAdapter
+                    }
                 }
             }
         }
     }
+
 
     private fun observeNews() {
         viewModel.news.observe(viewLifecycleOwner) { result ->
@@ -94,7 +104,7 @@ class HomeFragment : Fragment() {
                     binding.loadingMenuSelectedForYou.visibility = View.GONE
                     val newsData = result.data.newsData ?: emptyList()
                     userId?.let {
-                        homeAdapter = HomeAdapter(newsData, it, repository)
+                        homeAdapter = HomeAdapter(newsData, it, repository, bookmarkViewModel ,viewLifecycleOwner)
                         binding.rvSelectedForYou.adapter = homeAdapter
                     }
                 }
@@ -110,4 +120,5 @@ class HomeFragment : Fragment() {
         val intent = Intent(requireContext(), AddArticleActivity::class.java)
         startActivity(intent)
     }
+
 }

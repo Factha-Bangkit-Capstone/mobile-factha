@@ -7,7 +7,9 @@ import com.bangkit.factha.data.response.NewsResponse
 import com.bangkit.factha.data.response.ProfileResponse
 import com.bangkit.factha.data.response.RegisterResponse
 import com.bangkit.factha.data.response.SaveNewsRequest
+import com.bangkit.factha.data.response.SavedDataItem
 import com.bangkit.factha.data.response.SavedNewsResponse
+import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -37,6 +39,12 @@ interface ApiServiceMain {
     suspend fun getNewsDetail(
         @Header("X-Auth-Token") token: String,
         @Path("newsId") newsId: String
+    ): Response<NewsResponse>
+
+    @GET("news/search?keyword={keyword}")
+    suspend fun searchNews(
+        @Header("X-Auth-Token") token: String,
+        @Path("keyword") keyword: String
     ): Response<NewsResponse>
 
     @POST("news")
