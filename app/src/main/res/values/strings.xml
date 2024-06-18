@@ -40,11 +40,11 @@
     <string name="saved">saved</string>
     <string name="setting">setting</string>
     <string name="factha">factha.</string>
-    <string name="write">Write</string>
-    <string name="check_your_article">Check Your Article</string>
-    <string name="our_model_will_check_the_factual_accuracy_of_your_article">Our model will check the factual accuracy of your article.</string>
-    <string name="add">Add</string>
-    <string name="selected_for_you">Selected For You</string>
+    <string name="write">Tulis</string>
+    <string name="check_your_article">Periksa Berita Anda</string>
+    <string name="our_model_will_check_the_factual_accuracy_of_your_article">Kami akan memeriksa faktualitas berita yang dimasukkan</string>
+    <string name="add">Tambah</string>
+    <string name="selected_for_you">Dipilih untuk kamu</string>
     <string name="kendaraan">#Kendaraan</string>
     <string name="find_article">Find Article</string>
     <string name="find_saved_article">Find Saved Article</string>

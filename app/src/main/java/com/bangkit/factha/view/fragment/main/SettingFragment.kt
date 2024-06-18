@@ -15,6 +15,7 @@ import com.bangkit.factha.view.activity.settings.AboutActivity
 import com.bangkit.factha.view.activity.splashscreen.SplashScreenActivity
 import com.bumptech.glide.Glide
 import android.util.Base64
+import android.view.animation.AnimationUtils
 import android.widget.Toast
 import com.bangkit.factha.view.activity.settings.ProfileActivity
 import kotlin.io.encoding.ExperimentalEncodingApi
@@ -38,6 +39,25 @@ class SettingFragment : Fragment() {
     @OptIn(ExperimentalEncodingApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val transition = AnimationUtils.loadAnimation(requireContext(), R.anim.transition_card_item)
+
+        binding.cardLanguage.apply {
+            visibility = View.VISIBLE
+            startAnimation(transition)
+        }
+        binding.cardAbout.apply {
+            visibility = View.VISIBLE
+            startAnimation(transition)
+        }
+        binding.cardNotification.apply {
+            visibility = View.VISIBLE
+            startAnimation(transition)
+        }
+        binding.cardLogout.apply {
+            visibility = View.VISIBLE
+            startAnimation(transition)
+        }
 
         binding.cardLanguage.setOnClickListener { selectLanguage() }
         binding.cardNotification.setOnClickListener { selectNotification()  }
