@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.WindowInsets
 import android.view.WindowManager
 import android.widget.Button
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.bangkit.factha.R
 import com.bangkit.factha.databinding.ActivitySplashScreenBinding
@@ -20,6 +21,7 @@ class SplashScreenActivity : AppCompatActivity() {
     private lateinit var buttonAuth: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         Thread.sleep(1_500)
         installSplashScreen()
