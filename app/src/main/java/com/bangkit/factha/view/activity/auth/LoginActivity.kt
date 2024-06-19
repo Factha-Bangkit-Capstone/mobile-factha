@@ -158,9 +158,9 @@ class LoginActivity : AppCompatActivity() {
                 is Result.Success -> {
                     binding.progressBar.visibility = View.GONE
                     AlertDialog.Builder(this).apply {
-                        setTitle("Success!")
-                        setMessage("Login successful!")
-                        setPositiveButton("Login") { _, _ ->
+                        setTitle(R.string.sukses)
+                        setMessage(R.string.login_sukses)
+                        setPositiveButton("OK") { _, _ ->
                             val intent = Intent(context, MainActivity::class.java)
                             intent.flags =
                                 Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK

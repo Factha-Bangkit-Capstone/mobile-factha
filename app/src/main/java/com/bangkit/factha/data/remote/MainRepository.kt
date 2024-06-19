@@ -19,6 +19,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
+import java.util.Locale
 
 class MainRepository(
     private val apiServiceMain: ApiServiceMain,
@@ -163,6 +164,8 @@ class MainRepository(
             body = body,
             image = imageBase64
         )
+
+
 
         return withContext(Dispatchers.IO) {
             try {

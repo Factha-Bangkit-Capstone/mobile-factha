@@ -15,7 +15,7 @@
     <string name="setting_subheading1">Indonesian</string>
     <string name="setting_heading2">Notifications</string>
     <string name="setting_subheading2">Manage notifications</string>
-    <string name="setting_heading3">About the application</string>
+    <string name="setting_heading3">About the application</string>`
     <string name="setting_subheading3">View application information</string>
     <string name="setting_heading4">Log out</string>
     <string name="setting_subheading4">Log out of your account</string>
@@ -104,6 +104,8 @@
     <string-array name="pilihan_tag">
         <item name="politik">Politics</item>
         <item name="ekonomi">Economy</item>
+        <item name="kesehatan">Health</item>
+        <item name="pendidikan">Education</item>
         <item name="sosialbudaya">Social Cultural</item>
         <item name="lalulintas">Traffic</item>
         <item name="hiburan">Entertainment</item>
@@ -128,4 +130,7 @@
     <string name="oke">OK</string>
     <string name="kembali">Back</string>
     <string name="belum_ada_berita_tersimpan">There are no saved news yet</string>
+    <string name="pindai_teks_dari_gambar">Scanning text from the image</string>
+    <string name="sukses">Success!</string>
+    <string name="login_sukses">Login Success</string>
 </resources>
