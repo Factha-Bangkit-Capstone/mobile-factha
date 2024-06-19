@@ -1,4 +1,5 @@
 # RashIO Mobile Application
+Author: [Muhammad Dzaka](https://linkedin.com/in/mhmddzk/) | [Mohammad Izamul](https://www.linkedin.com/in/izamulfikri/)
 
 <span>
 
@@ -64,7 +65,11 @@ cd mobile-factha
 ## Credits
 Our application will not be completed without these cool dudes who made cool stuff for us!
 
-- (Retrofit2)[https://square.github.io/retrofit/]
-- Glide[https://github.com/bumptech/glide]
-- CircleImageView[https://github.com/hdodenhof/CircleImageView]
-- MPAndroidChart[https://github.com/PhilJay/MPAndroidChart]
+- [Retrofit2](https://square.github.io/retrofit/)
+- [Glide](https://github.com/bumptech/glide)
+- [CircleImageView](https://github.com/hdodenhof/CircleImageView)
+- [MPAndroidChart](https://github.com/PhilJay/MPAndroidChart)
+
+<br>
+
+Factha Mobile Dev, 2024
