@@ -1,4 +1,4 @@
-# RashIO Mobile Application
+# Factha Mobile Application
 Author: [Muhammad Dzaka](https://linkedin.com/in/mhmddzk/) | [Mohammad Izamul](https://www.linkedin.com/in/izamulfikri/)
 
 <span>
