@@ -13,10 +13,6 @@ Author: [Muhammad Dzaka](https://linkedin.com/in/mhmddzk/) | [Mohammad Izamul](h
 
 <span>
 
-Design UX/UI using Figma.
-
-
-
 
 - [x] Desain UX/UI dengan Figma.
 
@@ -48,6 +44,9 @@ Design UX/UI using Figma.
 - Android Studio Iguana | 2023.2.1 
 
 ## Installation Instructions
+
+<span>
+
 - Fork and clone the forked repository:
 
 ```bash
@@ -63,6 +62,9 @@ cd mobile-factha
 - After everything's done, you can start build and develop with kotlin and android studio, lesgooo
 
 ## Credits
+
+<span>
+
 Our application will not be completed without these cool dudes who made cool stuff for us!
 
 - [Retrofit2](https://square.github.io/retrofit/)
