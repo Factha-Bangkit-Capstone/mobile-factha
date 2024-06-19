@@ -104,6 +104,8 @@
     <string-array name="pilihan_tag">
         <item name="politik">Politik</item>
         <item name="ekonomi">Ekonomi</item>
+        <item name="kesehatan">Kesehatan</item>
+        <item name="pendidikan">Pendidikan</item>
         <item name="sosialbudaya">Sosial Budaya</item>
         <item name="lalulintas">Lalu Lintas</item>
         <item name="hiburan">Hiburan</item>
@@ -128,4 +130,7 @@
     <string name="oke">Oke</string>
     <string name="kembali">Kembali</string>
     <string name="belum_ada_berita_tersimpan">Belum ada berita yang tersimpan</string>
+    <string name="pindai_teks_dari_gambar">Pindai teks dari gambar</string>
+    <string name="sukses">Sukses!</string>
+    <string name="login_sukses">Login Sukses</string>
 </resources>

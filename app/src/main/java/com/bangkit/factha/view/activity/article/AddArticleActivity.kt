@@ -38,6 +38,7 @@ import kotlinx.coroutines.runBlocking
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.IOException
+import java.util.Locale
 
 class AddArticleActivity : AppCompatActivity() {
 
@@ -225,7 +226,7 @@ class AddArticleActivity : AppCompatActivity() {
     private fun submitArticle() {
         val title = binding.edTitleForm.text.toString()
         val tag = binding.spinnerTag.selectedItem.toString()
-        val body = binding.edArticleForm.text.toString()
+        var body = binding.edArticleForm.text.toString()
 
         if (title.isEmpty() || body.isEmpty() || currentImageUri == null) {
             showToast(getString(R.string.pastikan_semua_data_sudah_terisi))
@@ -237,6 +238,9 @@ class AddArticleActivity : AppCompatActivity() {
         val userId = runBlocking { userPreferences.userId.first() }
 
         val imageBase64 = currentImageUri?.let { uriToBase64(it) } ?: ""
+        body = sanitizeArticle(body)
+
+        Log.d("see the body", "$body")
 
         if (token != null && userId != null) {
             addArticleViewModel.postNews(token, userId, title, tag, body, imageBase64)
@@ -297,7 +301,7 @@ class AddArticleActivity : AppCompatActivity() {
 
     private fun showImageAlertDialog(image: ImageView) {
         val builder = AlertDialog.Builder(this)
-            .setMessage("Scan Text from the Image")
+            .setMessage(R.string.pindai_teks_dari_gambar)
             .setPositiveButton("OK") { dialog, _ -> dialog.dismiss()
                 Log.i("tes aja ocr",currentImageUriOcr?.let { uriToBase64(it) } ?: "" )
                 postOcr(currentImageUriOcr?.let { uriToBase64(it) } ?: "")
@@ -318,6 +322,28 @@ class AddArticleActivity : AppCompatActivity() {
             e.printStackTrace()
             ""
         }
+    }
+
+    private fun sanitizeArticle(article: String): String {
+        var sanitizedArticle = article.replace("\"", "\\\"")
+        sanitizedArticle = sanitizedArticle.replace("\n", " ")
+        sanitizedArticle = wordopt(sanitizedArticle)
+        return sanitizedArticle
+    }
+
+    private fun wordopt(berita: String): String {
+        var text = berita.lowercase(Locale.ROOT)
+        text = text.replace("\\[.*?\\]".toRegex(), "")
+        text = text.replace("[^\\w\\s]".toRegex(), " ")
+        text = text.replace("https?://\\S+|www\\.\\S+".toRegex(), "")
+        text = text.replace("<.*?>+".toRegex(), "")
+        text = text.replace("\\s+".toRegex(), " ")
+        text = text.replace("[\\p{C}]".toRegex(), "")
+        text = text.replace("\\w*\\d\\w*".toRegex(), "")
+        text = text.replace("[…—–]".toRegex(), " ")
+        text = text.replace("[\\uD83C-\\uDBFF\\uDC00-\\uDFFF]".toRegex(), "")
+        text = text.trim()
+        return text
     }
 
     private fun showToast(message: String) {
