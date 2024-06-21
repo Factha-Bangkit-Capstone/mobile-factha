@@ -79,7 +79,7 @@ class MainRepository(
     suspend fun getNews(): Result<NewsResponse> {
         return try {
             val token = userPreferences.token.first() ?: ""
-
+            Log.d("tokenmainrepository", "$token")
             val response = apiServiceMain.getAllNews("Bearer $token")
 
             if (response.isSuccessful) {
