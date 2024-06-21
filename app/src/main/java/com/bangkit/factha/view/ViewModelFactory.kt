@@ -16,6 +16,7 @@ import com.bangkit.factha.view.activity.article.OcrViewModel
 import com.bangkit.factha.view.activity.auth.LoginViewModel
 import com.bangkit.factha.view.activity.auth.RegisterViewModel
 import com.bangkit.factha.view.activity.settings.ProfileViewModel
+import com.bangkit.factha.view.activity.splashscreen.SplashScreenViewModel
 import com.bangkit.factha.view.fragment.main.SettingViewModel
 import com.bangkit.factha.view.fragment.main.BookmarkViewModel
 
@@ -61,6 +62,10 @@ class ViewModelFactory private constructor(
             }
             modelClass.isAssignableFrom(OcrViewModel::class.java) -> {
                 OcrViewModel(OcrRepository(ApiConfigOcr.getOcrService())) as T
+            }
+            modelClass.isAssignableFrom(SplashScreenViewModel::class.java) -> {
+                val repository = InjectionMain.provideRepository(context)
+                SplashScreenViewModel(repository) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }

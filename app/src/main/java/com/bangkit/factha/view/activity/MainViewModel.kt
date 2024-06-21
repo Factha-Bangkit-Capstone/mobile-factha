@@ -46,8 +46,4 @@ class MainViewModel(private val repository: MainRepository) : ViewModel() {
             _searchedNews.postValue(result)
         }
     }
-
-    fun getToken(): LiveData<String?> {
-        return repository.getToken().asLiveData()
-    }
 }

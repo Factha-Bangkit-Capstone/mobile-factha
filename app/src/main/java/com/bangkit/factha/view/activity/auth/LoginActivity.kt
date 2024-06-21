@@ -1,6 +1,7 @@
 package com.bangkit.factha.view.activity.auth
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
@@ -16,10 +17,12 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.bangkit.factha.R
-import com.bangkit.factha.databinding.ActivityLoginBinding
 import com.bangkit.factha.data.helper.Result
+import com.bangkit.factha.databinding.ActivityLoginBinding
 import com.bangkit.factha.view.ViewModelFactory
 import com.bangkit.factha.view.activity.MainActivity
+import com.bangkit.factha.view.activity.splashscreen.SplashScreenActivity
+
 
 class LoginActivity : AppCompatActivity() {
     private var isPasswordVisible = false
@@ -36,7 +39,6 @@ class LoginActivity : AppCompatActivity() {
         binding.emailEtLogin.addTextChangedListener(emailTextWatcher)
         binding.passwordEtLogin.addTextChangedListener(passwordTextWatcher)
         binding.btnLogin.isEnabled = false
-
 
         setContentView(binding.root)
         setupPasswordToggle()
@@ -74,11 +76,8 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private val emailTextWatcher = object : TextWatcher {
-        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-        }
-
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-
         override fun afterTextChanged(s: Editable?) {
             validateEmail()
             validateFields()
@@ -86,11 +85,8 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private val passwordTextWatcher = object : TextWatcher {
-        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-        }
-
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-
         override fun afterTextChanged(s: Editable?) {
             validatePassword()
             validateFields()
@@ -161,11 +157,7 @@ class LoginActivity : AppCompatActivity() {
                         setTitle(R.string.sukses)
                         setMessage(R.string.login_sukses)
                         setPositiveButton("OK") { _, _ ->
-                            val intent = Intent(context, MainActivity::class.java)
-                            intent.flags =
-                                Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                            startActivity(intent)
-                            finish()
+                            triggerRestart(this@LoginActivity)
                         }
                         create()
                         show()
@@ -185,6 +177,13 @@ class LoginActivity : AppCompatActivity() {
         })
     }
 
+    private fun triggerRestart(context: Activity) {
+        val intent = Intent(context, MainActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        context.startActivity(intent)
+        context.finish()
+        Runtime.getRuntime().exit(0)
+    }
 
     override fun onDestroy() {
         super.onDestroy()

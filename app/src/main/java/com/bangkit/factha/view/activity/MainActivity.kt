@@ -1,6 +1,5 @@
 package com.bangkit.factha.view.activity
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -9,11 +8,10 @@ import androidx.fragment.app.Fragment
 import com.bangkit.factha.R
 import com.bangkit.factha.databinding.ActivityMainBinding
 import com.bangkit.factha.view.ViewModelFactory
-import com.bangkit.factha.view.activity.splashscreen.SplashScreenActivity
+import com.bangkit.factha.view.fragment.main.ArticleFragment
 import com.bangkit.factha.view.fragment.main.HomeFragment
 import com.bangkit.factha.view.fragment.main.SaveFragment
 import com.bangkit.factha.view.fragment.main.SettingFragment
-import com.bangkit.factha.view.fragment.main.ArticleFragment
 
 @Suppress("DEPRECATION")
 class MainActivity : AppCompatActivity() {
@@ -26,50 +24,53 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+        replaceFragment(HomeFragment())
 
-        viewModel.getToken().observe(this) { token ->
-            if(token==null){
-                startActivity(Intent(this, SplashScreenActivity::class.java))
-                finish()
-            }
-
-            if (token != null) {
-                binding = ActivityMainBinding.inflate(layoutInflater)
-                val view = binding.root
-                setContentView(view)
-                replaceFragment(HomeFragment())
-
-                binding.btnNav.setOnNavigationItemSelectedListener { item ->
-                    when (item.itemId) {
-                        R.id.home -> {
-                            replaceFragment(HomeFragment())
-                            true
-                        }
-                        R.id.article -> {
-                            replaceFragment(ArticleFragment())
-                            true
-                        }
-                        R.id.save -> {
-                            replaceFragment(SaveFragment())
-                            true
-                        }
-                        R.id.setting -> {
-                            replaceFragment(SettingFragment())
-                            true
-                        }
-                        else -> false
+        binding.btnNav.setOnNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.home -> {
+                    if (!isCurrentFragment(HomeFragment::class.java)) {
+                        replaceFragment(HomeFragment())
                     }
+                    true
                 }
-                viewModel.getProfile()
+                R.id.article -> {
+                    if (!isCurrentFragment(ArticleFragment::class.java)) {
+                        replaceFragment(ArticleFragment())
+                    }
+                    true
+                }
+                R.id.save -> {
+                    if (!isCurrentFragment(SaveFragment::class.java)) {
+                        replaceFragment(SaveFragment())
+                    }
+                    true
+                }
+                R.id.setting -> {
+                    if (!isCurrentFragment(SettingFragment::class.java)) {
+                        replaceFragment(SettingFragment())
+                    }
+                    true
+                }
+                else -> false
             }
         }
+        viewModel.getProfile()
     }
 
     private fun replaceFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, fragment)
             .commit()
+    }
+
+    private fun isCurrentFragment(fragmentClass: Class<out Fragment>): Boolean {
+        val currentFragment = supportFragmentManager.findFragmentById(R.id.fragment_container)
+        return currentFragment != null && currentFragment::class.java == fragmentClass
     }
 }
