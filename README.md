@@ -72,6 +72,9 @@ Our application will not be completed without these cool dudes who made cool stu
 - [CircleImageView](https://github.com/hdodenhof/CircleImageView)
 - [MPAndroidChart](https://github.com/PhilJay/MPAndroidChart)
 
+## Demo Apps
+- [Demo Video](https://drive.google.com/file/d/19AeDaOk3Hwx_jVlxWP5NRBmO0h_1FoPv/view?usp=drive_link)
+
 <br>
 
 Factha Mobile Dev, 2024
